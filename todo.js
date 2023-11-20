@@ -4,7 +4,7 @@ const addTodoBox = document.getElementById("addTodo");
 
 const todoContainer = document.getElementById("todoContainer");
 
-let todoDetail = [];
+let todoDetail = [];  
 
 const displayTodo = () => {
   let allTodoOutput = "";
