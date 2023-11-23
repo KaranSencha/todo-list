@@ -32,6 +32,10 @@
         <div>Yesterday</div>
         <div>Karan</div>
         <div>Todo items</div>
+        <div>In progress</div>
+        <div>Yesterday</div>
+        <div>Karan</div>
+        <div>Todo items</div>
       </div>
 
       <div class="category-create">Create New List</div>
@@ -39,19 +43,28 @@
 
     <!-- main content  -->
     <main>
+      <!-- Title of Todos  -->
       <header>
-        <!-- Todo input  -->
-        <input type="text" placeholder="Add a task" name="addTodo" id="addTodo" />
+        <h2>Tommorow</h2>
+        <div class="filter-box">
+          <button>Filter</button>
+        </div>
       </header>
+
+      <!-- Todo input - Add Todo  -->
+      <div class="add-todo-box">
+        <input type="text" placeholder="Add a task" name="addTodo" id="addTodo" />
+      </div>
+
+      <!-- Todo items  -->
+      <div class="todo-container" id="todoContainer">
+        <div class="todo-item">
+          <div>Book reading</div>
+        </div>
+      </div>
     </main>
 
-    <!-- Todo list items  -->
-    <div class="todo-items" id="todoContainer">
-      <div class="todo-item">
-        <input type="checkbox" name="" id="" />
-        <div>Book reading</div>
-      </div>
-    </div>
+
 
     <!-- Java Script  -->
     <script src="todo.js"></script>

@@ -18,7 +18,7 @@ const displayTodo = () => {
     }
     allTodoOutput += `
 	<div class="todo-item ${todoStatus}" onclick="completeTodo(${index})" >
-			<input type="checkbox">
+	   <span></span>
 			<div >${element.todoValue}</div>
 		</div>
 	`;
@@ -83,6 +83,10 @@ const sidebarIcon = document.querySelector(".sidebar-icon");
 
 const sidebarContainer = document.querySelector(".sidebar");
 
+const mainContent = document.querySelector("main");
+
 sidebarIcon.addEventListener("click", function () {
   sidebarContainer.classList.toggle("sidebar-show");
+
+  mainContent.classList.toggle("main-expand");
 });
