@@ -4,7 +4,7 @@ const addTodoBox = document.getElementById("addTodo");
 
 const todoContainer = document.getElementById("todoContainer");
 
-let todoDetail = [];  
+let todoDetail = [];
 
 const displayTodo = () => {
   let allTodoOutput = "";
@@ -71,10 +71,18 @@ const completeTodo = (index) => {
 };
 
 const removeTodo = (index) => {
-  
- todoDetail.splice(index, 1);
+  todoDetail.splice(index, 1);
 
-   localStorage.setItem("todos", JSON.stringify(todoDetail));
+  localStorage.setItem("todos", JSON.stringify(todoDetail));
 
-   displayTodo();
-}
+  displayTodo();
+};
+
+// Show/Hide menu
+const sidebarIcon = document.querySelector(".sidebar-icon");
+
+const sidebarContainer = document.querySelector(".sidebar");
+
+sidebarIcon.addEventListener("click", function () {
+  sidebarContainer.classList.toggle("sidebar-show");
+});

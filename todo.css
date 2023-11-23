@@ -2,6 +2,7 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	user-select: none;
 }
 
 body {
@@ -11,7 +12,103 @@ body {
 	padding-top: 30px;
 }
 
+/* sidebar  */
+aside {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	background-color: #333;
+	height: 100vh;
+	width: 320px;
+	transition: all 0.5s ease-in-out;
+}
+
+.sidebar-show {
+	left: -320px;
+}
+
+/* Sidebar Icon  */
+.sidebar-icon {
+	position: absolute;
+	top: 20px;
+	left: 0;
+	display: flex;
+	align-items: center;
+	height: 50px;
+	width: 320px;
+	z-index: 99;
+}
+
+.sidebar-icon span {
+	cursor: pointer;
+	font-size: 2.5rem;
+	margin-left: 30px;
+	font-weight: 500;
+	color: #ccc;
+}
+
+.category-box {
+	margin-top: 50px;
+	width: 100%;
+	height: calc(100% - 100px);
+	padding: 20px 0;
+	overflow-y: auto;
+}
+
+.category-create {
+	text-align: center;
+	padding: 10px;
+	border-top: 2px solid #555;
+	background-color: #333;
+	font-size: 1.25rem;
+	width: 100%;
+	height: 50px;
+}
+
+.category-box::-webkit-scrollbar {
+	width: 10px;
+	background-color: transparent;
+}
+
+.category-box::-webkit-scrollbar-thumb {
+	background-color: #555;
+	border-radius: 4px;
+}
+
+.category-box div {
+	width: 100%;
+	padding: 15px 35px;
+	font-size: 1.2rem;
+	border-left: 4px solid transparent;
+}
+
+.category-box div:hover {
+	background-color: #555;
+	border-left: 4px solid rgb(0, 128, 32);
+}
+
+.category-box .active {
+	background-color: #444 !important;
+	border-left: 4px solid rgb(107, 0, 128) !important;
+
+}
+
+/* Start work heare  */
+main {
+	height: 100vh;
+	overflow: hidden;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: calc(100vw - 320px);
+	background-color: #222;
+	padding: 20px 20px;
+	padding-bottom: 0;
+}
+
 input[type="text"] {
+	display: none;
 	font-size: 1.3rem;
 	color: #ccc;
 	background-color: #333;
@@ -19,11 +116,11 @@ input[type="text"] {
 	border: 2px solid rgb(79, 79, 79);
 	border-radius: 8px;
 	outline: none;
-	width: 70vw;
+	width: 50vw;
 	height: 50px;
 	position: fixed;
 	bottom: 100px;
-	left: 15vw;
+	right: 15vw;
 }
 
 input[type="checkbox"] {
@@ -36,21 +133,14 @@ input[type="checkbox"] {
 }
 
 .todo-items {
+	display: none;
 	border: 1px solid #444;
-	width: 70vw;
+	width: 50vw;
 	height: 80vh;
 	margin: auto;
 	overflow-x: auto;
 }
 
-.todo-items::-webkit-scrollbar {
-	width: 10px;
-}
-
-.todo-items::-webkit-scrollbar-thumb {
-	background-color: #777;
-	border-radius: 10px;
-}
 
 .todo-item {
 	margin-bottom: 15px;

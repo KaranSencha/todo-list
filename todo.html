@@ -4,13 +4,46 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Todo List</title>
+    <title>Todo List | Productivity Tool</title>
 
+    <!-- Style Sheet  -->
     <link rel="stylesheet" href="todo.css" />
+
+    <!-- Google Icons  -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
   </head>
   <body>
-    <!-- Todo input  --> 
-    <input type="text" placeholder="Add a task" name="addTodo" id="addTodo" />
+    <!-- Sidebar Icon  -->
+    <div class="sidebar-icon">
+      <span class="material-symbols-outlined"> menu </span>
+    </div>
+
+    <!-- Sidebar  -->
+    <aside class="sidebar">
+      <div class="category-box">
+        <div>Completed</div>
+        <div>Lunch</div>
+        <div class="active">Today</div>
+        <div>Pending</div>
+        <div>In progress</div>
+        <div>Yesterday</div>
+        <div>Karan</div>
+        <div>Todo items</div>
+      </div>
+
+      <div class="category-create">Create New List</div>
+    </aside>
+
+    <!-- main content  -->
+    <main>
+      <header>
+        <!-- Todo input  -->
+        <input type="text" placeholder="Add a task" name="addTodo" id="addTodo" />
+      </header>
+    </main>
 
     <!-- Todo list items  -->
     <div class="todo-items" id="todoContainer">
@@ -20,6 +53,7 @@
       </div>
     </div>
 
+    <!-- Java Script  -->
     <script src="todo.js"></script>
   </body>
 </html>
