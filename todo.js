@@ -90,3 +90,27 @@ sidebarIcon.addEventListener("click", function () {
 
   mainContent.classList.toggle("main-expand");
 });
+
+// Category List Create
+const addNewList = document.getElementById("addNewList");
+const categoryBox = document.querySelector(".category-box");
+
+addNewList.addEventListener("keydown", function (event) {
+  const newListValue = event.target.value;
+
+  if (event.key === "Enter") {
+    // when todo is empty return  not add
+    if (newListValue.trim().length === 0) {
+      return;
+    } else {
+      const newListElement = document.createElement("div");
+
+      newListElement.innerHTML = ` <span class="material-symbols-outlined"> format_list_bulleted </span>
+          <span>${newListValue}</span>`;
+
+      categoryBox.appendChild(newListElement);
+      event.target.value = "";
+      event.target.blur();
+    }
+  }
+});

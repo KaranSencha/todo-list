@@ -24,21 +24,50 @@
     <!-- Sidebar  -->
     <aside class="sidebar">
       <div class="category-box">
-        <div>Completed</div>
-        <div>Lunch</div>
-        <div class="active">Today</div>
-        <div>Pending</div>
-        <div>In progress</div>
-        <div>Yesterday</div>
-        <div>Karan</div>
-        <div>Todo items</div>
-        <div>In progress</div>
-        <div>Yesterday</div>
-        <div>Karan</div>
-        <div>Todo items</div>
+        <div>
+          <span class="material-symbols-outlined"> checklist </span>
+          <span>My Tasks</span>
+        </div>
+        <div class="active">
+          <span class="material-symbols-outlined"> check_circle </span>
+          <span>Completed</span>
+        </div>
+        <div>
+          <span class="material-symbols-outlined"> star </span>
+          <span>Important</span>
+        </div>
+        <div>
+          <span class="material-symbols-outlined"> task </span>
+          <span>All Tasks</span>
+        </div>
+        <hr />
+        <div>
+          <span class="material-symbols-outlined"> format_list_bulleted </span>
+          <span>Today Plan</span>
+        </div>
+
+        <div>
+          <span class="material-symbols-outlined"> format_list_bulleted </span>
+          <span>Study Notes</span>
+        </div>
+
+        <div>
+          <span class="material-symbols-outlined"> format_list_bulleted </span>
+          <span>Business Meeting</span>
+        </div>
+
+        <div>
+          <span class="material-symbols-outlined"> format_list_bulleted </span>
+          <span>Health & Fitness</span>
+        </div>
       </div>
 
-      <div class="category-create">Create New List</div>
+      <div class="category-create">
+        <span class="material-symbols-outlined icon"> add </span>
+        <span>
+          <input type="text" placeholder="Create New List" name="addTodo" id="addNewList" />
+        </span>
+      </div>
     </aside>
 
     <!-- main content  -->
@@ -47,13 +76,15 @@
       <header>
         <h2>Tommorow</h2>
         <div class="filter-box">
-          <button>Filter</button>
+          <button>↑↓ Sort</button>
         </div>
       </header>
 
       <!-- Todo input - Add Todo  -->
       <div class="add-todo-box">
+        <span class="material-symbols-outlined icon"> add </span>
         <input type="text" placeholder="Add a task" name="addTodo" id="addTodo" />
+        <span class="add">Add</span>
       </div>
 
       <!-- Todo items  -->
@@ -63,8 +94,6 @@
         </div>
       </div>
     </main>
-
-
 
     <!-- Java Script  -->
     <script src="todo.js"></script>
