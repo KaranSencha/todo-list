@@ -43,7 +43,7 @@ body {
 /* Sidebar Icon  */
 #sidebarIcon {
 	position: absolute;
-	top: 20px;
+	top: 25px;
 	left: 20px;
 	z-index: 99;
 	font-size: 2.1rem;
@@ -96,7 +96,7 @@ body {
 .category-box div {
 	width: 100%;
 	padding: 12px 25px;
-	font-size: 1.1rem;
+	font-size: 17px;
 	cursor: pointer;
 	border-left: 4px solid transparent;
 	display: flex;
@@ -108,12 +108,12 @@ body {
 }
 
 .category-box div:hover {
-	background-color: var(--darkgray1);
+	background-color: var(--darkgray2);
 }
 
 .category-box .active {
 	font-weight: 600;
-	background-color: var(--darkgray2) !important;
+	background-color: #555 !important;
 	border-left: 5px solid var(--green);
 }
 
@@ -127,7 +127,7 @@ body {
 .category-create {
 	border-top: 1px solid var(--darkgray1);
 	background-color: var(--darkgray3);
-	font-size: 1.2rem;
+	font-size: 1.1rem;
 	width: 100%;
 	height: 50px;
 	display: flex;
@@ -158,8 +158,7 @@ main {
 	background-color: var(--darkgray4);
 	height: 100vh;
 	width: calc(100vw - 320px);
-	padding: 20px 0;
-	padding-bottom: 10px;
+	padding-top: 20px;
 	overflow: hidden;
 	position: absolute;
 	right: 0;
@@ -172,13 +171,14 @@ main {
 }
 
 main header {
-	height: 60px;
-	background-color: var(--darkgray3);
 	padding-left: 20px;
+	padding: 5px 0;
+	color: #bbb;
 	padding-right: 20px;
 	width: calc(100% - 60px);
 	margin-left: 30px;
 	margin-right: 30px;
+	margin-bottom: 5px;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -197,8 +197,8 @@ header .title-box {
 }
 
 main header .title {
-	font-size: 26px;
-padding-right: 10px;
+	font-size: 24px;
+	padding-right: 10px;
 }
 
 .title-box .title-dropdown {
@@ -209,17 +209,16 @@ padding-right: 10px;
 .title-box .menu-content {
 	display: none;
 	position: absolute;
+	padding: 8px 0;
 	top: 40px;
 	left: -60px;
 	border-radius: 8px;
-	background-color: #444;
+	background-color: #272727;
 	min-width: 200px;
-	overflow: auto;
-	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 	z-index: 999;
 }
 
-.title-box .menu-content div {
+.title-box .menu-content .menu-item {
 	color: #ccc;
 	padding: 8px 16px;
 	display: flex;
@@ -227,11 +226,18 @@ padding-right: 10px;
 	gap: 10px;
 	transition: all 0.3s ease-in;
 	cursor: pointer;
-
 }
 
-.title-box .menu-content div:hover {
-	background-color: #555;
+.title-box .menu-content .menu-item:hover {
+	background-color: var(--darkgray2)
+}
+
+.title-box .menu-content .menu-item span {
+	color: #ddd !important;
+}
+
+.title-box .menu-content .delete-item span {
+	color: rgb(241, 118, 118) !important;
 }
 
 .dropdown-show {
@@ -246,14 +252,50 @@ header .title-box .title-menu {
 }
 
 header .title-box .title-menu:hover {
-	background-color: #444;
+	background-color: #353535;
+}
+
+.title-box .change-theme {
+	position: relative;
+}
+
+
+.title-box .change-theme .theme-colors {
+	position: absolute;
+	top: 0;
+	left: 200px;
+	display: none;
+	align-items: center;
+	justify-content: space-around;
+	gap: 15px;
+	background-color: #252525;
+	height: 80px;
+	padding: 0 20px;
+	transition: all 1.3s ease-in-out;
+	overflow: hidden;
+	cursor: default;
+}
+
+.change-theme .theme-colors .theme-color {
+	border-radius: 50%;
+	padding: 22px;
+	cursor: pointer;
+	transition: all 0.1s ease-in-out;
+}
+
+.change-theme .theme-colors .theme-color:hover {
+	outline: #bbb solid 2px;
+}
+
+.change-theme:hover .theme-colors {
+	display: flex;
 }
 
 main header .filter-box .sort-btn {
 	font-size: 1.1rem;
 	padding: 7px 15px;
 	border-radius: 6px;
-	background-color: var(--darkgray2);
+	background-color: transparent;
 	color: var(--green);
 	border: none;
 	cursor: pointer;
@@ -264,7 +306,7 @@ main header .filter-box .sort-btn {
 }
 
 main header .filter-box .sort-btn:hover {
-	background-color: var(--darkgray1);
+	background-color: #353535;
 }
 
 /* Add todo box  */
@@ -277,9 +319,8 @@ main header .filter-box .sort-btn:hover {
 	border-radius: 8px;
 	cursor: text;
 	display: flex;
-	justify-content: space-between;
-	overflow: hidden;
 	align-items: center;
+	overflow: hidden;
 }
 
 .add-todo-box .icon {
@@ -288,7 +329,6 @@ main header .filter-box .sort-btn:hover {
 	padding: 30px 12px;
 	text-align: center;
 	cursor: pointer;
-	background-color: #444;
 }
 
 input[type="text"] {
@@ -302,9 +342,13 @@ input[type="text"] {
 	height: 100%;
 }
 
+.add-todo-box input {
+	padding-left: 5px;
+}
+
 .add-todo-box .add {
 	text-align: center;
-	background-color: var(--darkgray2);
+	background-color: #444;
 	width: 80px;
 	font-size: 1.2rem;
 	padding: 30px 0;
@@ -314,9 +358,11 @@ input[type="text"] {
 /* Todo container - todo  */
 .todo-container {
 	width: 100%;
+	height: calc(100% - 120px);
 	padding-left: 30px;
 	padding-right: 30px;
 	overflow-y: auto;
+	padding-bottom: 20px;
 }
 
 .todo-container::-webkit-scrollbar {
@@ -331,42 +377,47 @@ input[type="text"] {
 
 /* Todo  */
 .todo {
-	margin-bottom: 15px;
+	margin-top: 10px;
+	min-height: 50px;
 	display: flex;
 	align-items: center;
-	overflow-x: hidden;
-	overflow-y: auto;
+	word-wrap: break-word;
+	word-break: break-word;
+	flex-wrap: wrap;
 	width: 100%;
-	font-size: 1.2rem;
+	font-size: 17px;
 	background-color: var(--darkgray3);
 	border-radius: 6px;
+	overflow: hidden;
+}
+
+.todo:hover {
+	background-color: #383838;
 }
 
 .todo span:not(.todo-value) {
-	padding: 15px 10px;
-	width: 50px;
 	display: flex;
-	align-items: center;
 	justify-content: center;
-	background-color: #444;
+	align-items: center;
+	min-height: 50px;
+	width: 50px;
 	cursor: pointer;
 }
 
 .todo .todo-value {
-	padding: 15px 10px;
 	width: calc(100% - 100px);
-	text-wrap: wrap;
-	overflow-x: hidden;
-	overflow-y: auto;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	padding: 8px 12px;
+	min-height: 50px;
 }
 
 .todo-completed {
-	background-color: #353535;
 	text-decoration: line-through;
 }
 
 .completed {
-	color: #da46eed6;
 	font-variation-settings:
 		'FILL' 1,
 		'wght' 500,
@@ -375,10 +426,70 @@ input[type="text"] {
 }
 
 .important {
-	color: var(--green);
 	font-variation-settings:
 		'FILL' 1,
 		'wght' 500,
 		'GRAD' 0,
 		'opsz' 24;
+}
+
+/* Todo menu  */
+.todo-menu {
+	display: none;
+	padding: 8px 0;
+	border-radius: 8px;
+	background-color: #272727;
+	width: 250px;
+	z-index: 999;
+	color: #ccc;
+	position: absolute;
+}
+
+.todo-menu .todo-menu-item {
+	color: #ccc;
+	padding: 8px 16px;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	transition: all 0.2s ease-in;
+	cursor: pointer;
+}
+
+.todo-menu .todo-menu-item:hover {
+	background-color: var(--darkgray2);
+}
+
+
+/* Responsive for Tablet  */
+@media only screen and (max-width: 1000px) {
+	main {
+		width: 100vw;
+		top: 0;
+		left: 0;
+	}
+
+	main header {
+		padding-left: 50px;
+	}
+
+	.sidebar {
+		z-index: 90;
+	}
+}
+
+/* Theme Colors  */
+.theme-blue * {
+	color: #78bafd;
+}
+
+.theme-purple * {
+	color: #b692e4;
+}
+
+.theme-red * {
+	color: #e99894;
+}
+
+.theme-green * {
+	color: #a3cd88;
 }

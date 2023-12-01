@@ -47,15 +47,40 @@
           <div class="title-dropdown">
             <span class="material-symbols-outlined title-menu"> more_vert </span>
             <div class="menu-content">
-              <div class="menu-item">
+              <div class="menu-item edit-list">
                 <span class="material-symbols-outlined"> edit</span>
-                <span>Edit List</span>
+                <span>Rename List</span>
               </div>
-              <div class="menu-item">
+              <div class="menu-item change-theme">
                 <span class="material-symbols-outlined"> palette </span>
                 <span>Change Theme</span>
+                <div class="theme-colors">
+                  <span
+                    data="theme-blue"
+                    style="background-color: #78bafd"
+                    class="theme-color"
+                  ></span>
+
+                  <span
+                    data="theme-purple"
+                    style="background-color: #b692e4"
+                    class="theme-color"
+                  ></span>
+
+                  <span
+                    data="theme-red"
+                    style="background-color: #e99894"
+                    class="theme-color"
+                  ></span>
+
+                  <span
+                    data="theme-green"
+                    style="background-color: #a3cd88"
+                    class="theme-color"
+                  ></span>
+                </div>
               </div>
-              <div class="menu-item">
+              <div class="menu-item delete-item">
                 <span class="material-symbols-outlined"> delete </span>
                 <span class="menu-item-value">Delete List</span>
               </div>
@@ -76,6 +101,22 @@
         <span class="add add-todo-btn">Add</span>
       </div>
 
+      <div class="todo-menu">
+        <div class="todo-menu-item">
+          <span class="material-symbols-outlined"> star</span>
+          <span>Mark as important</span>
+        </div>
+
+        <div class="todo-menu-item">
+          <span class="material-symbols-outlined"> check_circle</span>
+          <span>Mark as completed</span>
+        </div>
+
+        <div class="todo-menu-item">
+          <span class="material-symbols-outlined"> delete</span>
+          <span>Delete task</span>
+        </div>
+      </div>
       <!-- Todo items  -->
       <div class="todo-container" id="todoContainer">
         <div class="todo">
@@ -87,6 +128,6 @@
     </main>
 
     <!-- Java Script  -->
-    <script src="todo.js"></script>
+    <script src="fix.js"></script>
   </body>
 </html>
