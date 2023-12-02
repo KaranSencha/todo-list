@@ -47,6 +47,7 @@
           <div class="title-dropdown">
             <span class="material-symbols-outlined title-menu"> more_vert </span>
             <div class="menu-content">
+              <div class="menu-title">List Options</div>
               <div class="menu-item edit-list">
                 <span class="material-symbols-outlined"> edit</span>
                 <span>Rename List</span>
@@ -87,10 +88,31 @@
             </div>
           </div>
         </div>
+
         <div class="filter-box">
           <button class="sort-btn">
-            <span class="material-symbols-outlined"> sort </span><span>Sort</span>
+            <span class="material-symbols-outlined icon-rotate"> sync_alt </span><span>Sort</span>
           </button>
+
+          <div class="sort-menu">
+            <div class="sort-menu-title">Sort by</div>
+            <div class="sort-menu-item">
+              <span class="material-symbols-outlined">star</span>
+              <span>Importance</span>
+            </div>
+
+            <div class="sort-menu-item">
+              <span class="material-symbols-outlined icon-rotate"> sync_alt</span>
+              <span>Alphabetically</span>
+            </div>
+
+            <div class="sort-menu-item">
+              <span class="material-symbols-outlined">
+                <span class="material-symbols-outlined"> calendar_month </span></span
+              >
+              <span>Creation date</span>
+            </div>
+          </div>
         </div>
       </header>
 
@@ -103,6 +125,11 @@
 
       <div class="todo-menu">
         <div class="todo-menu-item">
+          <span class="material-symbols-outlined"> edit</span>
+          <span>Edit Task</span>
+        </div>
+
+        <div class="todo-menu-item">
           <span class="material-symbols-outlined"> star</span>
           <span>Mark as important</span>
         </div>
@@ -112,9 +139,9 @@
           <span>Mark as completed</span>
         </div>
 
-        <div class="todo-menu-item">
+        <div class="todo-menu-item delete-item">
           <span class="material-symbols-outlined"> delete</span>
-          <span>Delete task</span>
+          <span class="">Delete task</span>
         </div>
       </div>
       <!-- Todo items  -->

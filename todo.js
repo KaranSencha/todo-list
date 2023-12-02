@@ -19,9 +19,10 @@ const mainContent = document.querySelector("main");
 
 const categoryTitle = document.querySelector(".title");
 
-const categoryMenu = document.querySelector(".title-menu");
+const categoryMenuIcon = document.querySelector(".title-menu");
 
-const categoryMenuContent = document.querySelector(".menu-content");
+const categoryMenu = document.querySelector(".menu-content");
+
 const categoryMenuItems = document.querySelectorAll(".menu-item");
 
 const addTodoInput = document.querySelector("#addTodo");
@@ -32,15 +33,23 @@ const addTodoIcon = document.querySelector(".add-todo-icon");
 
 const todoContainer = document.querySelector("#todoContainer");
 
+const todoMenu = document.querySelector(".todo-menu");
+
+const todoMenuItems = document.querySelectorAll(".todo-menu-item");
+
+const sortBtn = document.querySelector(".sort-btn");
+
+const sortMenu = document.querySelector(".sort-menu");
+
+const sortMenuItems = document.querySelectorAll(".sort-menu-item");
+
+const themeColors = document.querySelectorAll(".theme-color");
+
 let todos;
 
-let checkboxIcons;
-
-let importantIcons;
-
-// 3. Local Storage - Categories
-let categoryDetails = [];
-let activeCategoryValue;
+// 3. Category Details
+let allCategoryDetail = [];
+let activeCategoryDetail;
 
 // 4. Default Category for new users
 const defaultCategory = [
@@ -48,16 +57,14 @@ const defaultCategory = [
     name: "My Tasks",
     isActive: false,
     iconText: "checklist",
+    themeColor: "",
+    activeTodo: -1,
     todos: [
       {
         name: "My Tasks",
         isCompleted: true,
         isImportant: false,
-      },
-      {
-        name: "exercise in morning",
-        isCompleted: false,
-        isImportant: true,
+        date: 88998981111,
       },
     ],
   },
@@ -65,16 +72,20 @@ const defaultCategory = [
     name: "Completed",
     isActive: false,
     iconText: "check_circle",
+    themeColor: "",
+    activeTodo: -1,
     todos: [
       {
         name: "Business Completed",
-        isCompleted: true,
+        isCompleted: false,
         isImportant: false,
+        date: 189821132,
       },
       {
         name: "Laptop and Phone",
         isCompleted: false,
         isImportant: true,
+        date: 83829832,
       },
     ],
   },
@@ -82,16 +93,20 @@ const defaultCategory = [
     name: "Important",
     isActive: false,
     iconText: "star",
+    themeColor: "",
+    activeTodo: -1,
     todos: [
       {
         name: "Discipline",
-        isCompleted: true,
+        isCompleted: false,
         isImportant: false,
+        date: 9191918281,
       },
       {
         name: "Focus with study",
         isCompleted: false,
         isImportant: true,
+        date: 81938918,
       },
     ],
   },
@@ -99,16 +114,20 @@ const defaultCategory = [
     name: "All Tasks",
     isActive: false,
     iconText: "task",
+    themeColor: "",
+    activeTodo: -1,
     todos: [
       {
         name: "Study and Rreading",
-        isCompleted: true,
+        isCompleted: false,
         isImportant: false,
+        date: 12238291112,
       },
       {
         name: "exercise in morning",
         isCompleted: false,
         isImportant: true,
+        date: 12282929199988,
       },
     ],
   },
@@ -116,50 +135,20 @@ const defaultCategory = [
     name: "Today Plan",
     isActive: true,
     iconText: "format_list_bulleted ",
+    themeColor: "",
+    activeTodo: -1,
     todos: [
       {
         name: "Study and Rreading",
-        isCompleted: true,
+        isCompleted: false,
         isImportant: false,
+        date: 5527271222,
       },
       {
         name: "exercise in morning",
         isCompleted: false,
         isImportant: true,
-      },
-    ],
-  },
-  {
-    name: "Physical Health",
-    isActive: false,
-    iconText: "format_list_bulleted ",
-    todos: [
-      {
-        name: "Study and Rreading",
-        isCompleted: true,
-        isImportant: false,
-      },
-      {
-        name: "exercise in morning",
-        isCompleted: false,
-        isImportant: true,
-      },
-    ],
-  },
-  {
-    name: "Business Planing",
-    isActive: false,
-    iconText: "format_list_bulleted ",
-    todos: [
-      {
-        name: "Study and Rreading",
-        isCompleted: true,
-        isImportant: false,
-      },
-      {
-        name: "exercise in morning",
-        isCompleted: false,
-        isImportant: true,
+        date: 8291138811,
       },
     ],
   },
@@ -172,13 +161,14 @@ const displayCategories = () => {
   let hrLine = "";
 
   // Get Category Details from localStorage
-  categoryDetails = JSON.parse(localStorage.getItem("categories")) ?? defaultCategory;
+  allCategoryDetail = JSON.parse(localStorage.getItem("categories")) ?? defaultCategory;
 
-  categoryDetails.forEach((category, index) => {
+  allCategoryDetail.forEach((category, index) => {
     if (index === 3) hrLine = "<hr>";
     if (category.isActive) {
       isActive = "active";
       categoryTitle.textContent = category.name;
+      activeCategoryDetail = category;
     }
     categoryData += `
       <div class="category ${isActive}">
@@ -190,178 +180,199 @@ const displayCategories = () => {
     hrLine = "";
   });
 
-  // save to local storage
-  localStorage.setItem("categories", JSON.stringify(categoryDetails));
+  // Save in Local Storage
+  updateLocalStorage();
 
   categoryContainer.innerHTML = categoryData;
   activeCategory();
   displayTodos();
-  updateClickedMenuItem();
+  clickedCategoryMenuItem();
+  clickedTodoMenuItem();
 };
 displayCategories();
 
-// When new Category Added or created
+// When New Category Added/Created ✅
 addCategory.addEventListener("keydown", function (event) {
-  const categoryName = event.target.value;
-
   if (event.key === "Enter") {
-    // if nothing in input field return
-    if (categoryName.trim().length === 0) return;
+    const inputValue = event.target.value;
 
-    // Take all value
+    // if input field is empty then return
+    if (inputValue.trim().length === 0) return;
+
+    // Check input value already exists or not
+    let length = allCategoryDetail.length;
+    let i = 0;
+    while (i < length) {
+      if (allCategoryDetail[i].name === inputValue) {
+        alert("Category Aready Exist ");
+        break;
+      }
+      i++;
+    }
+
+    if (i < length) return;
+
+    // Create New Category
     const newCategory = {
-      name: categoryName,
+      name: inputValue,
       isActive: true,
       iconText: "format_list_bulleted",
+      themeColor: "",
+      activeTodo: -1,
       todos: [],
     };
 
-    // Get previous categories
-    categoryDetails = JSON.parse(localStorage.getItem("categories")) ?? defaultCategory;
+    // Add new category to allCategoryDetail
+    allCategoryDetail.push(newCategory);
 
-    // push new category to category Details
-    categoryDetails.push(newCategory);
+    // Update Active Category
+    activeCategoryDetail.isActive = false;
+    activeCategoryDetail = allCategoryDetail[length];
 
-    // save to local storage
-    localStorage.setItem("categories", JSON.stringify(categoryDetails));
+    // Save in Local Storage
+    updateLocalStorage();
 
-    // reset input
+    // Reset Input field
     event.target.value = "";
+    event.target.blur();
 
-    // remove all active class from category
+    // remove previous active class in - DOM
     removeAllActiveClass();
 
-    //add this category to category box
+    // Display newCategory in Sidebar
     categoryContainer.innerHTML += `
       <div class="category active">
           <span class="material-symbols-outlined"> format_list_bulleted </span>
-          <span>${categoryName}</span>
+          <span>${inputValue}</span>
       </div>
     `;
 
-    categoryTitle.textContent = categoryName;
-
-    updateActiveCategory(categoryName);
     displayTodos();
     activeCategory();
   }
 });
 
-// Display All Todos Function
+// Update Local Storage  ✅
+function updateLocalStorage() {
+  // Save All Categories Detail in Local Storage
+  localStorage.setItem("categories", JSON.stringify(allCategoryDetail));
+}
+
+// Display All Todos  ✅
 function displayTodos() {
   let todoData = "";
   let todoName = "";
-  let todoCompleted = "";
-  let isCompleted = "";
-  let isImportant = "";
-  let checkboxText = "circle";
-
-  // Get Category Details from localStorage
-  categoryDetails = JSON.parse(localStorage.getItem("categories"));
+  let themeColor = "";
+  let todoId = 0;
 
   // Find Active Category Value
-  categoryDetails.forEach((category, index) => {
+  allCategoryDetail.forEach((category) => {
     if (category.isActive === true) {
-      activeCategoryValue = categoryDetails[index];
+      activeCategoryDetail = category;
+      themeColor = category.themeColor;
+      categoryTitle.textContent = category.name;
     }
   });
 
-  // Loop Through all todo values
-  activeCategoryValue.todos.forEach((todo) => {
+  // Add Theme Value Class to Main
+  if (mainContent.classList.contains("main-expand")) {
+    mainContent.className = "";
+    mainContent.classList.add("main-expand");
+  } else {
+    mainContent.className = "";
+  }
+
+  mainContent.classList.add(themeColor || "no-theme");
+
+  // Display All Todos of - Active Category
+  activeCategoryDetail.todos.forEach((todo) => {
+    let isCompleted = "";
+    let todoCompleted = "";
+    let isImportant = "";
+    let iconText = "circle";
+
     todoName = todo.name;
+    todoId = todo.date;
+    if (todo.isImportant) isImportant = "important";
 
     if (todo.isCompleted) {
       isCompleted = "completed";
       todoCompleted = "todo-completed";
-      // Change Icon of Checkbox
-      checkboxText = "check_circle";
+      iconText = "check_circle";
     }
-    if (todo.isImportant) isImportant = "important";
 
     // Get all values and store
     todoData += `
-      <div class="todo">
-        <span class="material-symbols-outlined checkbox-box ${isCompleted}"> ${checkboxText}</span>
+      <div class="todo " id="${todoId}">
+        <span class="material-symbols-outlined checkbox-box ${isCompleted} "> ${iconText}</span>
         <span class="todo-value ${todoCompleted}">${todoName}</span>
         <span class="material-symbols-outlined important-box ${isImportant}"> star </span>
-      </div>
+      </div> 
     `;
-
-    // Empty all value for next iteration
-    todoName = "";
-    isCompleted = "";
-    isImportant = "";
-    todoCompleted = "";
-    checkboxText = "circle";
   });
 
   // Display in browser
   todoContainer.innerHTML = todoData;
 
   // Add Event Lister to Todos
-  updateClickedTodo();
+  clickedTodo();
 }
 
-function addNewTodo(event) {
-  const todoName = event.target.value;
-
-  if (event.key === "Enter") {
-    // if nothing in input field return
-    if (todoName.trim().length === 0) return;
-
-    // Take all value
-    const newTodo = {
-      name: todoName,
-      isCompleted: false,
-      isImportant: false,
-    };
-
-    // Get previous Data
-    categoryDetails = JSON.parse(localStorage.getItem("categories"));
-
-    // Find - Active Category
-    categoryDetails.forEach((category, index) => {
-      if (category.isActive === true) {
-        activeCategoryValue = categoryDetails[index];
-      }
-    });
-
-    // push new todo to - Active Category
-    activeCategoryValue.todos.push(newTodo);
-
-    // save to local storage
-    localStorage.setItem("categories", JSON.stringify(categoryDetails));
-
-    // reset input field
-    event.target.value = "";
-    event.target.blur();
-
-    // Call DisplayTodo
-    displayTodos();
-  }
-}
-// When new todo Added or created
+// When New todo Added/Created  ✅
 addTodoInput.addEventListener("keydown", function (event) {
-  addNewTodo(event);
+  if (event.key === "Enter") {
+    const inputValue = event.target.value;
+    addNewTodo(inputValue);
+  }
 });
 
-// Show & Hide - Sidebar
-sidebarIcon.addEventListener("click", function () {
-  sidebar.classList.toggle("sidebar-hide");
-  mainContent.classList.toggle("main-expand");
+// Add Event Listener to - Add Btn - Todo ✅
+addTodoBtn.addEventListener("click", function () {
+  let inputValue = addTodoInput.value;
+  addNewTodo(inputValue);
 });
 
-// Add Event Lister to Categories
+// Take Input Value Then - Create NewTodo ✅
+function addNewTodo(inputValue) {
+  // if input field is empty then return
+  if (inputValue.trim().length === 0) return;
+
+  // Store Todo Creation Time
+  const creationTime = Date.now();
+
+  // Create New Todo
+  const newTodo = {
+    name: inputValue,
+    isCompleted: false,
+    isImportant: false,
+    date: creationTime,
+  };
+
+  // Add new Todo to - Active Category
+  activeCategoryDetail.todos.unshift(newTodo);
+
+  // Save in Local Storage
+  updateLocalStorage();
+
+  // Reset Input field
+  addTodoInput.value = "";
+  addTodoInput.focus();
+
+  // Display All Todos
+  displayTodos();
+}
+
+// When Category Clicked - Set to Active Category
 function activeCategory() {
   let clickedCategory = "";
   const categories = document.querySelectorAll(".category");
 
-  categories.forEach((category, index) => {
+  categories.forEach((category) => {
     category.addEventListener("click", function () {
       // Find Clicked Category - Text
       clickedCategory = category.lastElementChild.textContent.trim();
 
-      // Update Header
+      // Update Title of Todos
       categoryTitle.textContent = clickedCategory;
 
       // update active class in Local Storage
@@ -377,7 +388,7 @@ function activeCategory() {
   });
 }
 
-// Remove all active class from Category
+// Remove all active class from Category in DOM
 function removeAllActiveClass() {
   const categories = document.querySelectorAll(".category");
   categories.forEach((category) => {
@@ -387,59 +398,47 @@ function removeAllActiveClass() {
 
 // Update Active Class to - Local Storage
 function updateActiveCategory(categoryName) {
-  // Get Category Details from localStorage
-  categoryDetails = JSON.parse(localStorage.getItem("categories"));
-
   // Update new - Active Category
-  categoryDetails.forEach((category) => {
+  allCategoryDetail.forEach((category) => {
     if (category.name === categoryName) {
       category.isActive = true;
+      activeCategoryDetail = category;
     } else {
       category.isActive = false;
     }
   });
 
-  // save active class to local Storage
-  localStorage.setItem("categories", JSON.stringify(categoryDetails));
+  // Save in Local Storage
+  updateLocalStorage();
 }
 
-// Toggle - Title/Category Menu
-categoryMenu.addEventListener("click", function (event) {
-  categoryMenuContent.classList.toggle("dropdown-show");
-
-  event.stopPropagation();
-  if (categoryMenuContent.classList.contains("dropdown-show")) {
-    document.addEventListener("click", function () {
-      categoryMenuContent.classList.remove("dropdown-show");
-    });
-  }
-});
-
-// Add Event lister to - Todos
-function updateClickedTodo() {
-  let clickedTodo = "";
+// When Todo Clicked - Reverse Todo Value
+function clickedTodo() {
+  let clickedTodoId = 0;
+  let activeTodo;
   let flagN = 0;
   todos = document.querySelectorAll(".todo");
 
   todos.forEach((element) => {
     element.addEventListener("click", function (event) {
-      const todo = event.target.closest(".todo");
+      activeTodo = event.target.closest(".todo");
 
-      if (todo) {
-        const checkboxIcon = todo.querySelector(".checkbox-box");
-        const importantIcon = todo.querySelector(".important-box");
-        const todoValue = todo.querySelector(".todo-value");
+      // Get Clicked Todo Created Time
+      clickedTodoId = Number(activeTodo.id);
 
-        clickedTodo = todoValue.textContent;
+      if (activeTodo) {
+        const checkboxIcon = activeTodo.querySelector(".checkbox-box");
+        const importantIcon = activeTodo.querySelector(".important-box");
+        const todoValue = activeTodo.querySelector(".todo-value");
 
-        if (event.target === checkboxIcon || event.target === todoValue) {
-          checkboxIcon.classList.toggle("completed");
-          todoValue.classList.toggle("todo-completed");
-
-          // Change Icon of Checkbox
-          if (checkboxIcon.textContent === "check_circle") {
+        if (event.target === checkboxIcon) {
+          if (checkboxIcon.classList.contains("completed")) {
+            checkboxIcon.classList.remove("completed");
+            todoValue.classList.remove("todo-completed");
             checkboxIcon.textContent = "circle";
           } else {
+            checkboxIcon.classList.add("completed");
+            todoValue.classList.add("todo-completed");
             checkboxIcon.textContent = "check_circle";
           }
 
@@ -447,35 +446,107 @@ function updateClickedTodo() {
         } else if (event.target === importantIcon) {
           importantIcon.classList.toggle("important");
           flagN = 2;
+        } else if (event.target === todoValue) {
+          event.stopPropagation();
+
+          // Show todo Menu
+          todoMenu.classList.add("dropdown-show");
+          categoryMenu.classList.remove("dropdown-show");
+
+          // Set Position of Todo Menu
+          if (window.innerHeight < event.clientY + 160) {
+            todoMenu.style.top = `${event.clientY - 150}px`;
+          } else {
+            todoMenu.style.top = `${event.clientY - 70}px`;
+          }
+          todoMenu.style.right = `calc(100vw - ${event.clientX + 260}px)`;
+
+          // Hide Todo Menu
+          document.addEventListener("click", function () {
+            todoMenu.classList.remove("dropdown-show");
+          });
         }
       }
 
-      activeCategoryValue.todos.forEach((todo) => {
-        if (todo.name === clickedTodo) {
+      // Update Local Storage -
+      activeCategoryDetail.todos.forEach((todo, index) => {
+        if (todo.date === clickedTodoId) {
+          // Get Active todo value
+          activeCategoryDetail.activeTodo = index;
           if (flagN === 1) {
             todo.isCompleted = !todo.isCompleted;
-            //  console.log(todo.isCompleted);
           } else if (flagN === 2) {
             todo.isImportant = !todo.isImportant;
           }
-          localStorage.setItem("categories", JSON.stringify(categoryDetails));
-          flagN = 0;
+
+          // Save in Local Storage
+          updateLocalStorage();
         }
       });
+
+      // review below
+      // displayTodos();
     });
   });
 }
 
-// Add Event Listener to - categoryMenuContent
-function updateClickedMenuItem() {
+//Add Event Listener to - Todo Menu
+function clickedTodoMenuItem() {
   let clickedMenuItem = "";
+
+  todoMenuItems.forEach((element) => {
+    element.addEventListener("click", function (event) {
+      clickedMenuItem = event.target
+        .closest(".todo-menu-item")
+        .querySelector("span:last-of-type").textContent;
+
+      let index = activeCategoryDetail.activeTodo;
+      if (clickedMenuItem === "Mark as important") {
+        activeCategoryDetail.todos[index].isImportant =
+          !activeCategoryDetail.todos[index].isImportant;
+      } else if (clickedMenuItem === "Mark as completed") {
+        activeCategoryDetail.todos[index].isCompleted =
+          !activeCategoryDetail.todos[index].isCompleted;
+      } else if (clickedMenuItem === "Delete task") {
+        activeCategoryDetail.todos.splice(index, 1);
+      }
+
+      // Update Local Storage -
+      // Save to Local Storage
+      localStorage.setItem("categories", JSON.stringify(allCategoryDetail));
+
+      displayTodos();
+    });
+  });
+}
+
+// Add Event Listener to - categoryMenu
+function clickedCategoryMenuItem() {
+  let clickedMenuItem = "";
+  let clickedThemeColor = "";
+
+  // Category Change Theme - Functionality
+  themeColors.forEach((element) => {
+    element.addEventListener("click", function (event) {
+      clickedThemeColor = event.target.getAttribute("data");
+      activeCategoryDetail.themeColor = clickedThemeColor;
+
+      // Save themeColor to Local Storage
+      localStorage.setItem("categories", JSON.stringify(allCategoryDetail));
+
+      // Display Changed Theme - Todos
+      displayTodos();
+    });
+  });
 
   categoryMenuItems.forEach((element) => {
     element.addEventListener("click", function (event) {
-      clickedMenuItem = event.target.closest(".menu-item").lastElementChild.textContent;
+      clickedMenuItem = event.target
+        .closest(".menu-item")
+        .querySelector("span:last-of-type").textContent;
 
       // Category Edit - Functionality
-      if (clickedMenuItem === "Edit List") {
+      if (clickedMenuItem === "Rename List") {
         categoryTitle.setAttribute("contenteditable", "true");
         categoryTitle.focus();
         // Place cursor at the End of the text
@@ -490,31 +561,79 @@ function updateClickedMenuItem() {
           if (event.key === "Enter") {
             categoryTitle.setAttribute("contenteditable", "false");
             let newTitle = event.target.textContent;
-            activeCategoryValue.name = newTitle;
+            activeCategoryDetail.name = newTitle;
+
+            let findIndex = allCategoryDetail.indexOf(activeCategoryDetail);
+
+            document.querySelectorAll(".category")[findIndex].lastElementChild.textContent =
+              newTitle;
 
             // Save to local Storage
-            localStorage.setItem("categories", JSON.stringify(categoryDetails));
+            localStorage.setItem("categories", JSON.stringify(allCategoryDetail));
           }
         });
 
-        // Category Change Theme - Functionality
-      } else if (clickedMenuItem === "Change Theme") {
-        // Category Delete - Functionality
+        // Delete Active Category - Functionality
       } else if (clickedMenuItem === "Delete List") {
+        // Find the index of the Active Category where isActive is true
+        const activeIndex = allCategoryDetail.findIndex((item) => {
+          return item.isActive;
+        });
+
+        // Remove the Active Category - categories
+        allCategoryDetail = allCategoryDetail.filter((category) => {
+          return !category.isActive;
+        });
+
+        // Make Active Category before 1 index
+        allCategoryDetail[activeIndex - 1].isActive = true;
+
+        // Save All Data to local Storage
+        localStorage.setItem("categories", JSON.stringify(allCategoryDetail));
+
+        // Now Display new Category Data
+        displayCategories();
       }
     });
   });
 }
+
+// Toggle - Category Menu
+categoryMenuIcon.addEventListener("click", function (event) {
+  categoryMenu.classList.toggle("dropdown-show");
+  todoMenu.classList.remove("dropdown-show");
+
+  event.stopPropagation();
+  if (categoryMenu.classList.contains("dropdown-show")) {
+    document.addEventListener("click", function () {
+      categoryMenu.classList.remove("dropdown-show");
+    });
+  }
+});
 
 // Add Event Listener to - Add Icon - Todo
 addTodoIcon.addEventListener("click", function () {
   addTodoInput.focus();
 });
 
-// Add Event Listener to - Add Btn - Todo
-addTodoBtn.addEventListener("click", function () {});
-
-// Add Event Listener to - Add Icon - Category
+//  Add Icon - Category
 addCategoryIcon.addEventListener("click", function () {
   addCategory.focus();
+});
+
+// Sort Button
+sortBtn.addEventListener("click", function (event) {
+  sortMenu.classList.toggle("dropdown-show");
+
+  event.stopPropagation();
+  if (sortMenu.classList.contains("dropdown-show")) {
+    document.addEventListener("click", function () {
+      sortMenu.classList.remove("dropdown-show");
+    });
+  }
+});
+// Show & Hide - Sidebar
+sidebarIcon.addEventListener("click", function () {
+  sidebar.classList.toggle("sidebar-hide");
+  mainContent.classList.toggle("main-expand");
 });
