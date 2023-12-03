@@ -3,6 +3,7 @@
 	padding: 0;
 	box-sizing: border-box;
 	user-select: none;
+	letter-spacing: 0.4px;
 }
 
 :root {
@@ -81,7 +82,7 @@ body {
 	width: 100%;
 	height: calc(100% - 130px);
 	margin-top: 80px;
-	overflow-y: auto;
+	overflow: hidden;
 }
 
 .category-box::-webkit-scrollbar {
@@ -102,10 +103,14 @@ body {
 	border-left: 4px solid transparent;
 	display: flex;
 	align-items: center;
-	text-wrap: nowrap;
-	text-overflow: ellipsis;
-	overflow-x: hidden;
 	gap: 15px;
+
+}
+
+.category-box div span:last-child {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .category-box div:hover {
@@ -196,13 +201,15 @@ main header {
 header .title-box {
 	width: 80%;
 	display: flex;
-	gap: 20px;
 	align-items: center;
 }
 
 main header .title {
 	font-size: 24px;
 	padding-right: 10px;
+		white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
 }
 
 .title-box .title-dropdown {

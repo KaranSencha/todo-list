@@ -58,6 +58,7 @@ const defaultCategory = [
     isActive: false,
     iconText: "checklist",
     themeColor: "",
+    sortType: "",
     activeTodo: -1,
     todos: [
       {
@@ -188,10 +189,11 @@ const displayCategories = () => {
   displayTodos();
   clickedCategoryMenuItem();
   clickedTodoMenuItem();
+  clickedSortMenuItem();
 };
 displayCategories();
 
-// When New Category Added/Created ✅
+// When New Category Added/Created ✔️
 addCategory.addEventListener("keydown", function (event) {
   if (event.key === "Enter") {
     const inputValue = event.target.value;
@@ -252,13 +254,13 @@ addCategory.addEventListener("keydown", function (event) {
   }
 });
 
-// Update Local Storage  ✅
+// Update Local Storage  ✔️
 function updateLocalStorage() {
   // Save All Categories Detail in Local Storage
   localStorage.setItem("categories", JSON.stringify(allCategoryDetail));
 }
 
-// Display All Todos  ✅
+// Display All Todos  ✔️
 function displayTodos() {
   let todoData = "";
   let todoName = "";
@@ -318,7 +320,7 @@ function displayTodos() {
   clickedTodo();
 }
 
-// When New todo Added/Created  ✅
+// When New todo Added/Created  ✔️
 addTodoInput.addEventListener("keydown", function (event) {
   if (event.key === "Enter") {
     const inputValue = event.target.value;
@@ -326,13 +328,13 @@ addTodoInput.addEventListener("keydown", function (event) {
   }
 });
 
-// Add Event Listener to - Add Btn - Todo ✅
+// Add Event Listener to - Add Btn - Todo ✔️
 addTodoBtn.addEventListener("click", function () {
   let inputValue = addTodoInput.value;
   addNewTodo(inputValue);
 });
 
-// Take Input Value Then - Create NewTodo ✅
+// Take Input Value Then - Create NewTodo ✔️
 function addNewTodo(inputValue) {
   // if input field is empty then return
   if (inputValue.trim().length === 0) return;
@@ -414,79 +416,85 @@ function updateActiveCategory(categoryName) {
 
 // When Todo Clicked - Reverse Todo Value
 function clickedTodo() {
+  todos = document.querySelectorAll(".todo");
+  todos.forEach((element) => {
+    element.addEventListener("click", function (event) {
+      getClickedTodo(event);
+    });
+  });
+}
+
+// When Todo Clicked - EventListener function
+function getClickedTodo(event) {
   let clickedTodoId = 0;
   let activeTodo;
   let flagN = 0;
-  todos = document.querySelectorAll(".todo");
 
-  todos.forEach((element) => {
-    element.addEventListener("click", function (event) {
-      activeTodo = event.target.closest(".todo");
+  activeTodo = event.target.closest(".todo");
 
-      // Get Clicked Todo Created Time
-      clickedTodoId = Number(activeTodo.id);
+  // Get Clicked Todo Created Time
+  clickedTodoId = Number(activeTodo.id);
 
-      if (activeTodo) {
-        const checkboxIcon = activeTodo.querySelector(".checkbox-box");
-        const importantIcon = activeTodo.querySelector(".important-box");
-        const todoValue = activeTodo.querySelector(".todo-value");
+  if (activeTodo) {
+    const checkboxIcon = activeTodo.querySelector(".checkbox-box");
+    const importantIcon = activeTodo.querySelector(".important-box");
+    const todoValue = activeTodo.querySelector(".todo-value");
 
-        if (event.target === checkboxIcon) {
-          if (checkboxIcon.classList.contains("completed")) {
-            checkboxIcon.classList.remove("completed");
-            todoValue.classList.remove("todo-completed");
-            checkboxIcon.textContent = "circle";
-          } else {
-            checkboxIcon.classList.add("completed");
-            todoValue.classList.add("todo-completed");
-            checkboxIcon.textContent = "check_circle";
-          }
-
-          flagN = 1;
-        } else if (event.target === importantIcon) {
-          importantIcon.classList.toggle("important");
-          flagN = 2;
-        } else if (event.target === todoValue) {
-          event.stopPropagation();
-
-          // Show todo Menu
-          todoMenu.classList.add("dropdown-show");
-          categoryMenu.classList.remove("dropdown-show");
-
-          // Set Position of Todo Menu
-          if (window.innerHeight < event.clientY + 160) {
-            todoMenu.style.top = `${event.clientY - 150}px`;
-          } else {
-            todoMenu.style.top = `${event.clientY - 70}px`;
-          }
-          todoMenu.style.right = `calc(100vw - ${event.clientX + 260}px)`;
-
-          // Hide Todo Menu
-          document.addEventListener("click", function () {
-            todoMenu.classList.remove("dropdown-show");
-          });
-        }
+    if (event.target === checkboxIcon) {
+      if (checkboxIcon.classList.contains("completed")) {
+        checkboxIcon.classList.remove("completed");
+        todoValue.classList.remove("todo-completed");
+        checkboxIcon.textContent = "circle";
+      } else {
+        checkboxIcon.classList.add("completed");
+        todoValue.classList.add("todo-completed");
+        checkboxIcon.textContent = "check_circle";
       }
 
-      // Update Local Storage -
-      activeCategoryDetail.todos.forEach((todo, index) => {
-        if (todo.date === clickedTodoId) {
-          // Get Active todo value
-          activeCategoryDetail.activeTodo = index;
-          if (flagN === 1) {
-            todo.isCompleted = !todo.isCompleted;
-          } else if (flagN === 2) {
-            todo.isImportant = !todo.isImportant;
-          }
+      flagN = 1;
+    } else if (event.target === importantIcon) {
+      importantIcon.classList.toggle("important");
+      flagN = 2;
+    } else if (event.target === todoValue) {
+      // Show todo Menu
+      todoMenu.classList.add("dropdown-show");
+      event.stopPropagation();
 
-          // Save in Local Storage
-          updateLocalStorage();
-        }
-      });
+      // Hide - categoryMenu & sortMenu
+      categoryMenu.classList.remove("dropdown-show");
+      sortMenu.classList.remove("dropdown-show");
 
-      // review below
-      // displayTodos();
-    });
+      // Set Position of Todo Menu
+      if (window.innerHeight < event.clientY + 160) {
+        todoMenu.style.top = `${event.clientY - 150}px`;
+      } else {
+        todoMenu.style.top = `${event.clientY - 70}px`;
+      }
+      todoMenu.style.right = `calc(100vw - ${event.clientX + 260}px)`;
+
+      // Close todoMenu  if user click outside
+      if (todoMenu.classList.contains("dropdown-show")) {
+        document.addEventListener("click", function () {
+          todoMenu.classList.remove("dropdown-show");
+        });
+      }
+    }
+  }
+
+  // Update Local Storage -
+  activeCategoryDetail.todos.forEach((todo, index) => {
+    if (todo.date === clickedTodoId) {
+      // Get Active todo value
+      activeCategoryDetail.activeTodo = index;
+      if (flagN === 1) {
+        todo.isCompleted = !todo.isCompleted;
+      } else if (flagN === 2) {
+        todo.isImportant = !todo.isImportant;
+      }
+
+      // Save in Local Storage
+      updateLocalStorage();
+    }
   });
 }
 
@@ -501,20 +509,26 @@ function clickedTodoMenuItem() {
         .querySelector("span:last-of-type").textContent;
 
       let index = activeCategoryDetail.activeTodo;
-      if (clickedMenuItem === "Mark as important") {
+
+      if (clickedMenuItem === "Edit todo") {
+        let activetodoId = activeCategoryDetail.todos[index].date;
+        let activeTodoElement = document.getElementById(activetodoId).querySelector(".todo-value");
+        console.log(clickedMenuItem);
+        console.log(activeTodoElement);
+      } else if (clickedMenuItem === "Mark as important") {
         activeCategoryDetail.todos[index].isImportant =
           !activeCategoryDetail.todos[index].isImportant;
       } else if (clickedMenuItem === "Mark as completed") {
         activeCategoryDetail.todos[index].isCompleted =
           !activeCategoryDetail.todos[index].isCompleted;
-      } else if (clickedMenuItem === "Delete task") {
+      } else if (clickedMenuItem === "Delete todo") {
         activeCategoryDetail.todos.splice(index, 1);
       }
 
-      // Update Local Storage -
-      // Save to Local Storage
-      localStorage.setItem("categories", JSON.stringify(allCategoryDetail));
+      // Save in Local Storage
+      updateLocalStorage();
 
+      // Display All Todos with changes
       displayTodos();
     });
   });
@@ -531,8 +545,8 @@ function clickedCategoryMenuItem() {
       clickedThemeColor = event.target.getAttribute("data");
       activeCategoryDetail.themeColor = clickedThemeColor;
 
-      // Save themeColor to Local Storage
-      localStorage.setItem("categories", JSON.stringify(allCategoryDetail));
+      // Save in Local Storage
+      updateLocalStorage();
 
       // Display Changed Theme - Todos
       displayTodos();
@@ -568,8 +582,8 @@ function clickedCategoryMenuItem() {
             document.querySelectorAll(".category")[findIndex].lastElementChild.textContent =
               newTitle;
 
-            // Save to local Storage
-            localStorage.setItem("categories", JSON.stringify(allCategoryDetail));
+            // Save in Local Storage
+            updateLocalStorage();
           }
         });
 
@@ -588,8 +602,8 @@ function clickedCategoryMenuItem() {
         // Make Active Category before 1 index
         allCategoryDetail[activeIndex - 1].isActive = true;
 
-        // Save All Data to local Storage
-        localStorage.setItem("categories", JSON.stringify(allCategoryDetail));
+        // Save in Local Storage
+        updateLocalStorage();
 
         // Now Display new Category Data
         displayCategories();
@@ -598,12 +612,78 @@ function clickedCategoryMenuItem() {
   });
 }
 
+
+// sortMenu - 
+function clickedSortMenuItem() {
+ let clickedMenuItem = "";
+
+  // Save category to sortHistory
+ sortMenuItems.forEach((element) => {
+   element.addEventListener("click", function (event) {
+     clickedMenuItem = event.target
+       .closest(".sort-menu-item")
+       .querySelector("span:last-of-type").textContent;
+
+     if (clickedMenuItem === "Importance") {
+       importanceSortTodo();
+    } else if (clickedMenuItem === "Alphabetically") {
+        alphabeticallySortTodos();
+      } else if (clickedMenuItem === "Creation date") {
+       creationDateSortTodos();
+     }
+
+     // Save in Local Storage
+     updateLocalStorage();
+
+     // Display All Todos with changes
+     displayTodos();
+   });
+ });
+}
+
+// Importance - Sort todos
+function importanceSortTodo() {
+ activeCategoryDetail.todos.sort((a, b) =>
+   a.isImportant === b.isImportant ? 0 : a.isImportant ? -1 : 1
+ );
+
+ // Save in Local Storage
+ updateLocalStorage();
+
+ displayTodos();
+}
+
+// Alphabetically - Sort todos
+function alphabeticallySortTodos() {
+  // Sorting the todos based on the name property
+  activeCategoryDetail.todos.sort((a, b) => a.name.localeCompare(b.name));
+
+  // Save in Local Storage
+  updateLocalStorage();
+
+  displayTodos();
+}
+
+// Creation Date - Sort Todo
+function creationDateSortTodos() {
+  // Sorting the todos based on the date property
+ activeCategoryDetail.todos.sort((a, b) => a.date - b.date);
+
+  // Save in Local Storage
+  updateLocalStorage();
+
+  displayTodos();
+}
+
 // Toggle - Category Menu
 categoryMenuIcon.addEventListener("click", function (event) {
   categoryMenu.classList.toggle("dropdown-show");
-  todoMenu.classList.remove("dropdown-show");
-
   event.stopPropagation();
+
+  // Hide -  todoMenu & sortMenu
+  todoMenu.classList.remove("dropdown-show");
+  sortMenu.classList.remove("dropdown-show");
+
   if (categoryMenu.classList.contains("dropdown-show")) {
     document.addEventListener("click", function () {
       categoryMenu.classList.remove("dropdown-show");
@@ -621,18 +701,24 @@ addCategoryIcon.addEventListener("click", function () {
   addCategory.focus();
 });
 
-// Sort Button
+// // Toggle - Sort Menu ✔️
 sortBtn.addEventListener("click", function (event) {
   sortMenu.classList.toggle("dropdown-show");
-
   event.stopPropagation();
+
+  // Hide - categoryMenu & todoMenu
+  categoryMenu.classList.remove("dropdown-show");
+  todoMenu.classList.remove("dropdown-show");
+
+  // Close sortMenu if user click outside
   if (sortMenu.classList.contains("dropdown-show")) {
     document.addEventListener("click", function () {
       sortMenu.classList.remove("dropdown-show");
     });
   }
 });
-// Show & Hide - Sidebar
+
+// Show & Hide - Sidebar 
 sidebarIcon.addEventListener("click", function () {
   sidebar.classList.toggle("sidebar-hide");
   mainContent.classList.toggle("main-expand");
