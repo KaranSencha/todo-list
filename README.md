@@ -1,36 +1,48 @@
+# Todo List | Productivity Tool
 
-A fun guessing game that challenges your skills in guessing a secret number within a specified range. Choose your difficulty level, make your guesses, and compete for the highest score!
-- [live demo](https://guess.karansencha.com/)
+## Description
 
+The Todo List application serves as a user-friendly platform for organizing tasks efficiently. Users can perform various actions on tasks, including creation, editing, marking as important or completed, and deletion.
 
+## Usage
 
-## How to Play
-1. **Start**: Open the [website](https://guess.karansencha/).
-2. **Select Difficulty**: Choose a difficulty level from the dropdown.
-3. **Guess the Number**: Input your guess in the provided field.
-4. **Check Your Guess**: Click the "Check!" button to verify your guess.
-5. **Winning**: If you guess the number correctly, you win! The background color changes, and a flower animation plays.
-6. **New Game**: Click the "New Game" button to start over.
+- **Sideba**r: Use the sidebar icon to access different task categories.
+- **Task Creation**: Enter a task and add it to the list by pressing 'Enter' or clicking 'Add'.
+- **Task Management**: Perform various actions such as marking tasks as important/completed or editing/deleting tasks.
+- **Category Navigation**: Click on different categories in the sidebar to switch between tasks.
 
-## About
-This game project was developed as a simple web-based game to entertain users and test their guessing abilities. It's built using HTML, CSS, and JavaScript, focusing on a clean and interactive design.
+## Features Overview
 
+### 1. Category
 
-## Features
-- **Multiple Difficulty Levels**
-- **Scoring System**
-- **Local Storage**
-- **Responsive Design**
-- Game win **Flower Effect**
-  
-## Game Modes
-- **Easy**: Range between 1 to 20.
-- **Medium**: Range between 1 to 100.
-- **Hard**: Range between 1 to 500.
-- **Extreme**: Range between 1 to 10,000.
-  
+- **Create Category**
+- **Delete Category**
+- **Change Category Theme**
+- **Rename Category**
+
+### 2. Todo
+
+- **Add Todo**
+- **Delete Todo**
+- **Rename Todo**
+- **Mark Important Todo**
+- **Mark Complete Todo**
+
+### 3. Sort Todo
+
+- **Sort by Importance**
+- **Sort by Alphabetically**
+- **Sort by Creation Date**
+
+### Themes
+
+- Green
+- Red
+- Blue
+- Purple
 
 ## Build with
+
 - Java Script
 - HTML5
 - CSS3
