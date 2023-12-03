@@ -1,7 +1,6 @@
 "use strict";
 
-// All Variables
-// 1. Sidebar
+// Sidebar Elements ✔️
 const sidebarIcon = document.querySelector(".sidebar-icon");
 
 const sidebar = document.querySelector(".sidebar");
@@ -14,7 +13,7 @@ const addCategory = document.querySelector("#addNewList");
 
 const addCategoryIcon = document.querySelector("#addListIcon");
 
-// 2. Main
+// Main Content Elements ✔️
 const mainContent = document.querySelector("main");
 
 const categoryTitle = document.querySelector(".title");
@@ -47,11 +46,7 @@ const themeColors = document.querySelectorAll(".theme-color");
 
 let todos;
 
-// 3. Category Details
-let allCategoryDetail = [];
-let activeCategoryDetail;
-
-// 4. Default Category for new users
+//  Category Details and Default Categories ✔️
 const defaultCategory = [
   {
     name: "My Tasks",
@@ -155,14 +150,15 @@ const defaultCategory = [
   },
 ];
 
-// Display All Category of Local Storage Function
+let allCategoryDetail = JSON.parse(localStorage.getItem("categories")) ?? defaultCategory;
+
+let activeCategoryDetail;
+
+// Display Categories from Local Storage ✔️
 const displayCategories = () => {
   let categoryData = "";
   let isActive = " ";
   let hrLine = "";
-
-  // Get Category Details from localStorage
-  allCategoryDetail = JSON.parse(localStorage.getItem("categories")) ?? defaultCategory;
 
   allCategoryDetail.forEach((category, index) => {
     if (index === 3) hrLine = "<hr>";
@@ -193,7 +189,7 @@ const displayCategories = () => {
 };
 displayCategories();
 
-// When New Category Added/Created ✔️
+// Add New Category Event ✔️
 addCategory.addEventListener("keydown", function (event) {
   if (event.key === "Enter") {
     const inputValue = event.target.value;
@@ -260,7 +256,7 @@ function updateLocalStorage() {
   localStorage.setItem("categories", JSON.stringify(allCategoryDetail));
 }
 
-// Display All Todos  ✔️
+// Display Todos  ✔️
 function displayTodos() {
   let todoData = "";
   let todoName = "";
@@ -320,7 +316,7 @@ function displayTodos() {
   clickedTodo();
 }
 
-// When New todo Added/Created  ✔️
+// Add New Todo Event  ✔️
 addTodoInput.addEventListener("keydown", function (event) {
   if (event.key === "Enter") {
     const inputValue = event.target.value;
@@ -328,7 +324,7 @@ addTodoInput.addEventListener("keydown", function (event) {
   }
 });
 
-// Add Event Listener to - Add Btn - Todo ✔️
+// Add New Todo Event  ✔️
 addTodoBtn.addEventListener("click", function () {
   let inputValue = addTodoInput.value;
   addNewTodo(inputValue);
@@ -364,7 +360,7 @@ function addNewTodo(inputValue) {
   displayTodos();
 }
 
-// When Category Clicked - Set to Active Category
+// Active Category Selection ✔️
 function activeCategory() {
   let clickedCategory = "";
   const categories = document.querySelectorAll(".category");
@@ -398,7 +394,7 @@ function removeAllActiveClass() {
   });
 }
 
-// Update Active Class to - Local Storage
+// Update Active Category in Local Storage ✔️
 function updateActiveCategory(categoryName) {
   // Update new - Active Category
   allCategoryDetail.forEach((category) => {
@@ -414,7 +410,7 @@ function updateActiveCategory(categoryName) {
   updateLocalStorage();
 }
 
-// When Todo Clicked - Reverse Todo Value
+// Clicked Todo Event Handler ✔️
 function clickedTodo() {
   todos = document.querySelectorAll(".todo");
   todos.forEach((element) => {
@@ -424,7 +420,7 @@ function clickedTodo() {
   });
 }
 
-// When Todo Clicked - EventListener function
+// Get Clicked Todo Details ✔️
 function getClickedTodo(event) {
   let clickedTodoId = 0;
   let activeTodo;
@@ -498,7 +494,7 @@ function getClickedTodo(event) {
   });
 }
 
-//Add Event Listener to - Todo Menu
+// Clicked Todo Menu Item Event ✔️
 function clickedTodoMenuItem() {
   let clickedMenuItem = "";
 
@@ -534,7 +530,7 @@ function clickedTodoMenuItem() {
   });
 }
 
-// Add Event Listener to - categoryMenu
+// Clicked Category Menu Item Event ✔️
 function clickedCategoryMenuItem() {
   let clickedMenuItem = "";
   let clickedThemeColor = "";
@@ -612,48 +608,47 @@ function clickedCategoryMenuItem() {
   });
 }
 
-
-// sortMenu - 
+// Clicked Sort Menu Item Event ✔️
 function clickedSortMenuItem() {
- let clickedMenuItem = "";
+  let clickedMenuItem = "";
 
   // Save category to sortHistory
- sortMenuItems.forEach((element) => {
-   element.addEventListener("click", function (event) {
-     clickedMenuItem = event.target
-       .closest(".sort-menu-item")
-       .querySelector("span:last-of-type").textContent;
+  sortMenuItems.forEach((element) => {
+    element.addEventListener("click", function (event) {
+      clickedMenuItem = event.target
+        .closest(".sort-menu-item")
+        .querySelector("span:last-of-type").textContent;
 
-     if (clickedMenuItem === "Importance") {
-       importanceSortTodo();
-    } else if (clickedMenuItem === "Alphabetically") {
+      if (clickedMenuItem === "Importance") {
+        importanceSortTodo();
+      } else if (clickedMenuItem === "Alphabetically") {
         alphabeticallySortTodos();
       } else if (clickedMenuItem === "Creation date") {
-       creationDateSortTodos();
-     }
+        creationDateSortTodos();
+      }
 
-     // Save in Local Storage
-     updateLocalStorage();
+      // Save in Local Storage
+      updateLocalStorage();
 
-     // Display All Todos with changes
-     displayTodos();
-   });
- });
+      // Display All Todos with changes
+      displayTodos();
+    });
+  });
 }
 
-// Importance - Sort todos
+// Sort todos by Important ✔️
 function importanceSortTodo() {
- activeCategoryDetail.todos.sort((a, b) =>
-   a.isImportant === b.isImportant ? 0 : a.isImportant ? -1 : 1
- );
+  activeCategoryDetail.todos.sort((a, b) =>
+    a.isImportant === b.isImportant ? 0 : a.isImportant ? -1 : 1
+  );
 
- // Save in Local Storage
- updateLocalStorage();
+  // Save in Local Storage
+  updateLocalStorage();
 
- displayTodos();
+  displayTodos();
 }
 
-// Alphabetically - Sort todos
+// Sort todos by Alphabetically ✔️
 function alphabeticallySortTodos() {
   // Sorting the todos based on the name property
   activeCategoryDetail.todos.sort((a, b) => a.name.localeCompare(b.name));
@@ -664,10 +659,10 @@ function alphabeticallySortTodos() {
   displayTodos();
 }
 
-// Creation Date - Sort Todo
+// Sort todos by Creation Date ✔️
 function creationDateSortTodos() {
   // Sorting the todos based on the date property
- activeCategoryDetail.todos.sort((a, b) => a.date - b.date);
+  activeCategoryDetail.todos.sort((a, b) => a.date - b.date);
 
   // Save in Local Storage
   updateLocalStorage();
@@ -675,7 +670,7 @@ function creationDateSortTodos() {
   displayTodos();
 }
 
-// Toggle - Category Menu
+// Toggle - Category Menu ✔️
 categoryMenuIcon.addEventListener("click", function (event) {
   categoryMenu.classList.toggle("dropdown-show");
   event.stopPropagation();
@@ -691,17 +686,17 @@ categoryMenuIcon.addEventListener("click", function (event) {
   }
 });
 
-// Add Event Listener to - Add Icon - Todo
+// Add Todo Icon Click Event ✔️
 addTodoIcon.addEventListener("click", function () {
   addTodoInput.focus();
 });
 
-//  Add Icon - Category
+// Add Category Icon Click Event ✔️
 addCategoryIcon.addEventListener("click", function () {
   addCategory.focus();
 });
 
-// // Toggle - Sort Menu ✔️
+// Toggle - Sort Menu ✔️
 sortBtn.addEventListener("click", function (event) {
   sortMenu.classList.toggle("dropdown-show");
   event.stopPropagation();
@@ -718,7 +713,7 @@ sortBtn.addEventListener("click", function (event) {
   }
 });
 
-// Show & Hide - Sidebar 
+// Toggle - Sidebar
 sidebarIcon.addEventListener("click", function () {
   sidebar.classList.toggle("sidebar-hide");
   mainContent.classList.toggle("main-expand");
