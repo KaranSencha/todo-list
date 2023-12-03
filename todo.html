@@ -22,6 +22,7 @@
 
     <!-- Sidebar  -->
     <aside class="sidebar">
+      <!-- Categories -->
       <div class="category-box">
         <div class="category">
           <span class="material-symbols-outlined"> checklist </span>
@@ -29,6 +30,7 @@
         </div>
       </div>
 
+      <!-- Create Category -->
       <div class="category-create">
         <span class="material-symbols-outlined icon" id="addListIcon"> add </span>
         <span>
@@ -39,13 +41,15 @@
 
     <!-- main content  -->
     <main>
-      <!-- Title of Todos  -->
+      <!-- Category Header  -->
       <header>
         <div class="title-box">
           <h2 class="title">Tommorow</h2>
 
           <div class="title-dropdown">
             <span class="material-symbols-outlined title-menu"> more_vert </span>
+
+            <!-- Category Menu  -->
             <div class="menu-content">
               <div class="menu-title">List Options</div>
               <div class="menu-item edit-list">
@@ -89,11 +93,13 @@
           </div>
         </div>
 
+        <!-- Filter Box  -->
         <div class="filter-box">
           <button class="sort-btn">
             <span class="material-symbols-outlined icon-rotate"> sync_alt </span><span>Sort</span>
           </button>
 
+          <!-- Sort Menu  -->
           <div class="sort-menu">
             <div class="sort-menu-title">Sort by</div>
             <div class="sort-menu-item">
@@ -143,13 +149,10 @@
           <span class="">Delete todo</span>
         </div>
       </div>
+
       <!-- Todo items  -->
       <div class="todo-container" id="todoContainer">
-        <div class="todo">
-          <span class="material-symbols-outlined checkbox-box"> circle </span>
-          <span class="todo-value">Book Reading</span>
-          <span class="material-symbols-outlined important-box"> star </span>
-        </div>
+       <!-- Todo Items will be dynamically added here -->
       </div>
     </main>
 
