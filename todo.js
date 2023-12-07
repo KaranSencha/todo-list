@@ -504,6 +504,25 @@ function getClickedTodo(event) {
         todo.isImportant = !todo.isImportant;
       }
 
+      // Change todoMenu - Completed Item
+      if (todo.isCompleted === true) {
+        todoMenuItems[1].querySelector("span:last-of-type").textContent = "Mark as not completed";
+
+        todoMenuItems[1].querySelector("span:first-of-type").textContent = "circle";
+      } else {
+        todoMenuItems[1].querySelector("span:last-of-type").textContent = "Mark as completed";
+        todoMenuItems[1].querySelector("span:first-of-type").textContent = "check_circle";
+      }
+
+      // Change todoMenu - Important Item
+      if (todo.isImportant === true) {
+        todoMenuItems[0].querySelector("span:last-of-type").textContent = "Remove importance";
+        todoMenuItems[0].querySelector("span:first-of-type").classList.remove("important");
+      } else {
+        todoMenuItems[0].querySelector("span:last-of-type").textContent = "Mark as importance";
+        todoMenuItems[0].querySelector("span:first-of-type").classList.add("important");
+      }
+
       // Save in Local Storage
       updateLocalStorage();
     }
@@ -521,28 +540,30 @@ function clickedTodoMenuItem() {
         .querySelector("span:last-of-type").textContent;
 
       let index = activeCategoryDetail.activeTodo;
-
+  console.log(clickedMenuItem);
       if (clickedMenuItem === "Edit todo") {
         let activetodoId = activeCategoryDetail.todos[index].date;
         let activeTodoElement = document.getElementById(activetodoId).querySelector(".todo-value");
         console.log(clickedMenuItem);
         console.log(activeTodoElement);
-      } else if (clickedMenuItem === "Mark as important") {
-        activeCategoryDetail.todos[index].isImportant =
-          !activeCategoryDetail.todos[index].isImportant;
+      } else if (clickedMenuItem === "Mark as importance") {
+        activeCategoryDetail.todos[index].isImportant = true;
+      } else if (clickedMenuItem === "Remove importance") {
+        activeCategoryDetail.todos[index].isImportant = false;
       } else if (clickedMenuItem === "Mark as completed") {
-        activeCategoryDetail.todos[index].isCompleted =
-          !activeCategoryDetail.todos[index].isCompleted;
+        activeCategoryDetail.todos[index].isCompleted = true;
+      } else if (clickedMenuItem === "Mark as not completed") {
+        activeCategoryDetail.todos[index].isCompleted = false;
       } else if (clickedMenuItem === "Delete todo") {
         activeCategoryDetail.todos.splice(index, 1);
-        
+
         // Decrease Number in Category
         let findIndex = allCategoryDetail.indexOf(activeCategoryDetail);
 
         let increaseValue = document
           .querySelectorAll(".category")
-        [findIndex].querySelector(".todo-number");
-        
+          [findIndex].querySelector(".todo-number");
+
         increaseValue.textContent = activeCategoryDetail.todos.length;
       }
 
