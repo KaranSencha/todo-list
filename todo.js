@@ -159,8 +159,10 @@ const displayCategories = () => {
   let categoryData = "";
   let isActive = " ";
   let hrLine = "";
-
+  let categoryItems = 0;
   allCategoryDetail.forEach((category, index) => {
+    categoryItems = category.todos.length;
+    if (!categoryItems) categoryItems = "";
     if (index === 3) hrLine = "<hr>";
     if (category.isActive) {
       isActive = "active";
@@ -168,10 +170,13 @@ const displayCategories = () => {
       activeCategoryDetail = category;
     }
     categoryData += `
-      <div class="category ${isActive}">
+         <div class="category ${isActive}">
           <span class="material-symbols-outlined"> ${category.iconText} </span>
-          <span>${category.name}</span>
-      </div>${hrLine}
+          <div class="category-detail">
+            <span class="category-name">${category.name}</span>
+            <span class="todo-number">${categoryItems}</span>
+          </div>
+        </div>${hrLine}
   `;
     isActive = "";
     hrLine = "";
@@ -239,10 +244,13 @@ addCategory.addEventListener("keydown", function (event) {
 
     // Display newCategory in Sidebar
     categoryContainer.innerHTML += `
-      <div class="category active">
-          <span class="material-symbols-outlined"> format_list_bulleted </span>
-          <span>${inputValue}</span>
-      </div>
+        <div class="category active">
+          <span class="material-symbols-outlined">format_list_bulleted</span>
+          <div class="category-detail">
+            <span class="category-name">${inputValue}</span>
+            <span class="todo-number"></span>
+          </div>
+        </div>
     `;
 
     displayTodos();
@@ -349,6 +357,14 @@ function addNewTodo(inputValue) {
   // Add new Todo to - Active Category
   activeCategoryDetail.todos.unshift(newTodo);
 
+  // Increase Number in Category
+  let findIndex = allCategoryDetail.indexOf(activeCategoryDetail);
+
+  let increaseValue = document
+    .querySelectorAll(".category")
+    [findIndex].querySelector(".todo-number");
+  increaseValue.textContent = activeCategoryDetail.todos.length;
+
   // Save in Local Storage
   updateLocalStorage();
 
@@ -368,7 +384,7 @@ function activeCategory() {
   categories.forEach((category) => {
     category.addEventListener("click", function () {
       // Find Clicked Category - Text
-      clickedCategory = category.lastElementChild.textContent.trim();
+      clickedCategory = category.querySelector(".category-name").textContent.trim();
 
       // Update Title of Todos
       categoryTitle.textContent = clickedCategory;
@@ -519,6 +535,15 @@ function clickedTodoMenuItem() {
           !activeCategoryDetail.todos[index].isCompleted;
       } else if (clickedMenuItem === "Delete todo") {
         activeCategoryDetail.todos.splice(index, 1);
+        
+        // Decrease Number in Category
+        let findIndex = allCategoryDetail.indexOf(activeCategoryDetail);
+
+        let increaseValue = document
+          .querySelectorAll(".category")
+        [findIndex].querySelector(".todo-number");
+        
+        increaseValue.textContent = activeCategoryDetail.todos.length;
       }
 
       // Save in Local Storage
@@ -575,8 +600,9 @@ function clickedCategoryMenuItem() {
 
             let findIndex = allCategoryDetail.indexOf(activeCategoryDetail);
 
-            document.querySelectorAll(".category")[findIndex].lastElementChild.textContent =
-              newTitle;
+            document
+              .querySelectorAll(".category")
+              [findIndex].querySelector(".category-name").textContent = newTitle;
 
             // Save in Local Storage
             updateLocalStorage();
@@ -713,7 +739,7 @@ sortBtn.addEventListener("click", function (event) {
   }
 });
 
-// Toggle - Sidebar
+// Toggle - Sidebar ✔️
 sidebarIcon.addEventListener("click", function () {
   sidebar.classList.toggle("sidebar-hide");
   mainContent.classList.toggle("main-expand");

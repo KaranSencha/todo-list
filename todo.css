@@ -95,7 +95,7 @@ body {
 	border-radius: 4px;
 }
 
-.category-box div {
+.category-box .category {
 	width: 100%;
 	padding: 10px 25px;
 	font-size: 18px;
@@ -104,16 +104,28 @@ body {
 	display: flex;
 	align-items: center;
 	gap: 15px;
-
 }
 
-.category-box div span:last-child {
+.category .category-detail {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	overflow: hidden;
+}
+
+.category .category-name {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
 
-.category-box div:hover {
+.category .todo-number {
+	font-size: 1rem;
+	color: #aaa;
+	font-weight: 400;
+}
+
+.category-box .category:hover {
 	background-color: var(--darkgray2);
 	background-color: #323232;
 }
@@ -323,7 +335,7 @@ header .title-box .title-menu:hover {
 }
 
 .change-theme .theme-colors .theme-color:hover {
-	outline: #bbb solid 2px;
+	outline: #eee solid 2px;
 }
 
 .change-theme:hover .theme-colors {
