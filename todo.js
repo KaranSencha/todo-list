@@ -255,6 +255,7 @@ addCategory.addEventListener("keydown", function (event) {
 
     displayTodos();
     activeCategory();
+    updateLayout();
   }
 });
 
@@ -398,6 +399,7 @@ function activeCategory() {
       // Add 'active' class to the clicked category
       this.classList.add("active");
       displayTodos();
+      updateLayout();
     });
   });
 }
@@ -540,7 +542,7 @@ function clickedTodoMenuItem() {
         .querySelector("span:last-of-type").textContent;
 
       let index = activeCategoryDetail.activeTodo;
-  console.log(clickedMenuItem);
+      console.log(clickedMenuItem);
       if (clickedMenuItem === "Edit todo") {
         let activetodoId = activeCategoryDetail.todos[index].date;
         let activeTodoElement = document.getElementById(activetodoId).querySelector(".todo-value");
@@ -765,3 +767,12 @@ sidebarIcon.addEventListener("click", function () {
   sidebar.classList.toggle("sidebar-hide");
   mainContent.classList.toggle("main-expand");
 });
+
+// Update Layout ✔️
+function updateLayout() {
+  // Hide Sidebar in smaller screen
+  if (window.innerWidth < 800) {
+    sidebar.classList.add("sidebar-hide");
+    mainContent.classList.add("main-expand");
+  }
+}
