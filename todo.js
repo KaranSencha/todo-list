@@ -484,7 +484,12 @@ function getClickedTodo(event) {
       } else {
         todoMenu.style.top = `${event.clientY - 70}px`;
       }
+
       todoMenu.style.right = `calc(100vw - ${event.clientX + 260}px)`;
+
+      if (window.innerWidth < 600) {
+          todoMenu.style.right = `min(40vw, 100px)`;
+      }
 
       // Close todoMenu  if user click outside
       if (todoMenu.classList.contains("dropdown-show")) {
@@ -542,13 +547,7 @@ function clickedTodoMenuItem() {
         .querySelector("span:last-of-type").textContent;
 
       let index = activeCategoryDetail.activeTodo;
-      console.log(clickedMenuItem);
-      if (clickedMenuItem === "Edit todo") {
-        let activetodoId = activeCategoryDetail.todos[index].date;
-        let activeTodoElement = document.getElementById(activetodoId).querySelector(".todo-value");
-        console.log(clickedMenuItem);
-        console.log(activeTodoElement);
-      } else if (clickedMenuItem === "Mark as importance") {
+     if (clickedMenuItem === "Mark as importance") {
         activeCategoryDetail.todos[index].isImportant = true;
       } else if (clickedMenuItem === "Remove importance") {
         activeCategoryDetail.todos[index].isImportant = false;

@@ -83,6 +83,7 @@ body {
 	height: calc(100% - 130px);
 	margin-top: 80px;
 	overflow: hidden;
+	overflow-y: auto;
 }
 
 .category-box::-webkit-scrollbar {
@@ -546,6 +547,193 @@ main header .filter-box .sort-btn:hover {
 	.sidebar {
 		z-index: 90;
 	}
+}
+
+
+/* Responsive  for Smartphones*/
+@media only screen and (max-width: 600px) {
+	#sidebarIcon {
+		left: 20px;
+		font-weight: 500;
+	}
+
+	#sidebarIcon:hover {
+		background-color: transparent;
+	}
+
+	/* Sidebar */
+	.sidebar {
+		width: 320px;
+	}
+
+	.category-box {
+		height: calc(100% - 140px);
+	}
+
+	.category-box .category {
+		padding: 14px 25px;
+		font-size: 20px;
+		border-left: 6px solid transparent;
+	}
+
+
+	.category .todo-number {
+		font-size: 1.15rem;
+	}
+
+	.category-box .category:hover {
+		background-color: transparent;
+	}
+
+	.category-box hr {
+		margin: 10px 0px;
+	}
+
+	/* Category Create */
+	.category-create {
+		font-size: 1.3rem;
+		height: 60px;
+	}
+
+	.category-create input {
+		font-size: 1.35rem;
+	}
+
+	/* Main Content */
+	main {
+		width: 100vw;
+	}
+
+	/* Header Styles */
+	main header {
+		padding-left: 70px;
+		padding-right: 20px;
+	}
+
+	.main-expand header {
+		padding-left: 70px;
+	}
+
+	header .title-box {
+		width: min(400px, 80%);
+	}
+
+	main header .title {
+		font-size: 1.7rem;
+		padding: 6px 4px;
+		padding-right: 8px;
+	}
+
+
+	.menu-content .menu-title,
+	.sort-menu .sort-menu-title {
+		font-size: 1.1rem;
+	}
+
+	.menu-content .menu-item,
+	.sort-menu-item {
+		padding: 8px 16px;
+		font-size: 1.1rem;
+		gap: 12px;
+	}
+
+	.menu-content .menu-item:hover,
+	.sort-menu-item:hover {
+		background-color: transparent;
+	}
+
+	header .title-box .title-menu:hover {
+		background-color: transparent;
+	}
+
+
+
+	.change-theme .theme-colors .theme-color:hover {
+		outline: #eee solid 0px;
+	}
+
+	.change-theme:hover .theme-colors {
+		display: flex;
+	}
+
+	.filter-box .sort-btn {
+		font-size: 1.2rem;
+		border: 1px solid #353535;
+	}
+
+	main header .filter-box .sort-btn:hover {
+		background-color: transparent;
+	}
+
+	.sort-menu {
+		top: 70px;
+		right: 20px;
+	}
+
+	/* Add todo box  */
+	.add-todo-box {
+		height: 60px;
+		width: calc(100% - 40px);
+		margin-left: 20px;
+		margin-right: 20px;
+		border-radius: 6px;
+	}
+
+	.add-todo-box .icon {
+		font-size: 1.9rem;
+	}
+
+	.add-todo-box input[type="text"] {
+		font-size: 1.3rem;
+	}
+
+	.add-todo-box .add {
+		font-size: 1.25rem;
+	}
+
+	/* Todo container  */
+	.todo-container {
+		padding-left: 20px;
+		padding-right: 20px;
+		padding-bottom: 25px;
+	}
+
+	.todo-container::-webkit-scrollbar {
+		width: 5px;
+	}
+
+	/* Todo Styles */
+	.todo {
+		font-size: 19px;
+	}
+
+	.todo:hover {
+		background-color: transparent;
+	}
+
+	.todo span:not(.todo-value) {
+		font-size: 1.55rem;
+	}
+
+		.todo .todo-value{
+			padding: 10px 0;
+		}
+
+	/* Todo menu  */
+	.todo-menu {
+		border-radius: 6px;
+		width: fit-content;
+	}
+
+	.todo-menu .todo-menu-item {
+		font-size: 1.1rem;
+	}
+
+
+	.todo-menu .todo-menu-item:hover {
+		background-color: transparent;
+	}
+
 }
 
 /* Theme Colors  */
