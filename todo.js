@@ -42,109 +42,245 @@ const sortMenu = document.querySelector(".sort-menu");
 
 const sortMenuItems = document.querySelectorAll(".sort-menu-item");
 
+const sortingTypeBox = document.querySelector(".sort-type-box");
+
+const sortingTypeName = document.querySelector(".sort-type-name");
+
+const sortingRemoveIcon = document.querySelector(".sort-type-close");
+
 const themeColors = document.querySelectorAll(".theme-color");
+
+const themeColorBox = document.querySelector(".theme-colors");
 
 let todos;
 
 //  Category Details and Default Categories ✔️
 const defaultCategory = [
   {
-    name: "My Tasks",
-    isActive: false,
+    name: "Today Task",
+    isActive: true,
     iconText: "checklist",
-    themeColor: "",
-    sortType: "",
+    themeColor: "theme-green",
+    sortType: "Importance",
     activeTodo: -1,
     todos: [
       {
-        name: "My Tasks",
+        name: "Complete Project Deadline",
+        isCompleted: false,
+        isImportant: true,
+        date: 122131111,
+      },
+      {
+        name: "Prepare Presentation Slides",
+        isCompleted: false,
+        isImportant: false,
+        date: 8448713111,
+      },
+      {
+        name: "Respond to Client Emails",
+        isCompleted: false,
+        isImportant: true,
+        date: 8776553111,
+      },
+      {
+        name: "Review Code Updates",
+        isCompleted: false,
+        isImportant: false,
+        date: 87998713211,
+      },
+      {
+        name: "Collaborate with Design Team",
+        isCompleted: false,
+        isImportant: false,
+        date: 5577171361,
+      },
+      {
+        name: "Conduct User Testing",
         isCompleted: true,
         isImportant: false,
-        date: 88998981111,
+        date: 571337171361,
+      },
+      {
+        name: "Update Project Documentation",
+        isCompleted: false,
+        isImportant: true,
+        date: 55919714361,
       },
     ],
   },
   {
-    name: "Completed",
+    name: "Personal",
     isActive: false,
     iconText: "check_circle",
-    themeColor: "",
+    themeColor: "theme-blue",
     activeTodo: -1,
+    sortType: "none",
     todos: [
       {
-        name: "Business Completed",
+        name: "Grocery shopping",
         isCompleted: false,
         isImportant: false,
-        date: 189821132,
+        date: 882189821132,
       },
       {
-        name: "Laptop and Phone",
+        name: "Plan social activities",
+        isCompleted: false,
+        isImportant: false,
+        date: 87183829832,
+      },
+      {
+        name: "Pay bills (utility, rent, etc.)",
         isCompleted: false,
         isImportant: true,
-        date: 83829832,
+        date: 97183829832,
+      },
+      {
+        name: "Read a book",
+        isCompleted: false,
+        isImportant: true,
+        date: 178383829832,
       },
     ],
   },
   {
-    name: "Important",
+    name: "Health",
     isActive: false,
     iconText: "star",
-    themeColor: "",
+    themeColor: "theme-purple",
     activeTodo: -1,
+    sortType: "none",
     todos: [
       {
-        name: "Discipline",
+        name: "Schedule a check-up",
         isCompleted: false,
         isImportant: false,
-        date: 9191918281,
+        date: 739191918281,
       },
       {
-        name: "Focus with study",
+        name: "Get sufficient sleep",
         isCompleted: false,
         isImportant: true,
-        date: 81938918,
+        date: 7781938918,
+      },
+      {
+        name: "Exercise regularly",
+        isCompleted: false,
+        isImportant: true,
+        date: 78281938918,
+      },
+      {
+        name: "Prepare and eat a balanced meal",
+        isCompleted: false,
+        isImportant: false,
+        date: 17181938918,
       },
     ],
   },
   {
-    name: "All Tasks",
+    name: "Finance",
     isActive: false,
     iconText: "task",
     themeColor: "",
     activeTodo: -1,
+    sortType: "none",
     todos: [
       {
-        name: "Study and Rreading",
+        name: "Review monthly budget",
         isCompleted: false,
         isImportant: false,
-        date: 12238291112,
+        date: 333126571882,
       },
       {
-        name: "exercise in morning",
+        name: "Pay credit card bill",
         isCompleted: false,
         isImportant: true,
-        date: 12282929199988,
+        date: 2212287276688,
+      },
+      {
+        name: "Track expenses",
+        isCompleted: false,
+        isImportant: false,
+        date: 122829266698338,
+      },
+      {
+        name: "Plan for retirement or savings goals",
+        isCompleted: false,
+        isImportant: false,
+        date: 1228222927788,
+      },
+      {
+        name: "Save a portion of income",
+        isCompleted: false,
+        isImportant: true,
+        date: 1999929199988,
       },
     ],
   },
   {
-    name: "Today Plan",
-    isActive: true,
+    name: "Career Growth",
+    isActive: false,
+    iconText: "format_list_bulleted ",
+    themeColor: "theme-red",
+    activeTodo: -1,
+    sortType: "Alphabetically",
+    todos: [
+      {
+        name: "Learn a new skill or take an online course",
+        isCompleted: false,
+        isImportant: true,
+        date: 55337271222,
+      },
+      {
+        name: "Set career goals",
+        isCompleted: false,
+        isImportant: false,
+        date: 5527213171222,
+      },
+      {
+        name: "Update resume or LinkedIn profile",
+        isCompleted: false,
+        isImportant: false,
+        date: 55272713332222,
+      },
+      {
+        name: "Attend networking events",
+        isCompleted: false,
+        isImportant: false,
+        date: 55271313271222,
+      },
+    ],
+  },
+  {
+    name: "Performance Optimization",
+    isActive: false,
     iconText: "format_list_bulleted ",
     themeColor: "",
     activeTodo: -1,
+    sortType: "none",
     todos: [
       {
-        name: "Study and Rreading",
-        isCompleted: false,
-        isImportant: false,
-        date: 5527271222,
-      },
-      {
-        name: "exercise in morning",
+        name: "Minify and compress CSS, JavaScript, and HTML files",
         isCompleted: false,
         isImportant: true,
-        date: 8291138811,
+        date: 77737271222,
+      },
+      {
+        name: "Optimize loading time by reducing HTTP requests",
+        isCompleted: false,
+        isImportant: true,
+        date: 533213171222,
+      },
+      {
+        name: "Implement lazy loading of non-critical resources",
+        isCompleted: false,
+        isImportant: false,
+        date: 554443332222,
+      },
+      {
+        name: "Utilize CDNs for fast loading",
+        isCompleted: false,
+        isImportant: false,
+        date: 55266431222,
       },
     ],
   },
@@ -202,12 +338,12 @@ addCategory.addEventListener("keydown", function (event) {
     // if input field is empty then return
     if (inputValue.trim().length === 0) return;
 
-    // Check input value already exists or not
+    // Check same category already exists or not
     let length = allCategoryDetail.length;
     let i = 0;
     while (i < length) {
       if (allCategoryDetail[i].name === inputValue) {
-        alert("Category Aready Exist ");
+        alert("Category Aready Exist \nTry Another Name");
         break;
       }
       i++;
@@ -221,6 +357,7 @@ addCategory.addEventListener("keydown", function (event) {
       isActive: true,
       iconText: "format_list_bulleted",
       themeColor: "",
+      sortType: "none",
       activeTodo: -1,
       todos: [],
     };
@@ -290,6 +427,14 @@ function displayTodos() {
   }
 
   mainContent.classList.add(themeColor || "no-theme");
+
+  // Sorting Type show
+  sortingTypeBox.classList.add("sort-hidden");
+  if (activeCategoryDetail.sortType !== "none") {
+    sortingTypeBox.style.display = "flex";
+    sortingTypeName.textContent = `
+    Sorted by ${activeCategoryDetail.sortType}`;
+  }
 
   // Display All Todos of - Active Category
   activeCategoryDetail.todos.forEach((todo) => {
@@ -488,7 +633,7 @@ function getClickedTodo(event) {
       todoMenu.style.right = `calc(100vw - ${event.clientX + 260}px)`;
 
       if (window.innerWidth < 600) {
-          todoMenu.style.right = `min(40vw, 100px)`;
+        todoMenu.style.right = `min(40vw, 100px)`;
       }
 
       // Close todoMenu  if user click outside
@@ -547,7 +692,7 @@ function clickedTodoMenuItem() {
         .querySelector("span:last-of-type").textContent;
 
       let index = activeCategoryDetail.activeTodo;
-     if (clickedMenuItem === "Mark as importance") {
+      if (clickedMenuItem === "Mark as importance") {
         activeCategoryDetail.todos[index].isImportant = true;
       } else if (clickedMenuItem === "Remove importance") {
         activeCategoryDetail.todos[index].isImportant = false;
@@ -588,6 +733,9 @@ function clickedCategoryMenuItem() {
       clickedThemeColor = event.target.getAttribute("data");
       activeCategoryDetail.themeColor = clickedThemeColor;
 
+      themeColorBox.style.display = "none";
+
+      categoryMenu.classList.remove("dropdown-show");
       // Save in Local Storage
       updateLocalStorage();
 
@@ -632,6 +780,9 @@ function clickedCategoryMenuItem() {
         });
 
         // Delete Active Category - Functionality
+      } else if (clickedMenuItem === "Change Theme") {
+        event.stopPropagation();
+        themeColorBox.style.display = "flex";
       } else if (clickedMenuItem === "Delete List") {
         // Find the index of the Active Category where isActive is true
         const activeIndex = allCategoryDetail.findIndex((item) => {
@@ -674,6 +825,9 @@ function clickedSortMenuItem() {
       } else if (clickedMenuItem === "Creation date") {
         creationDateSortTodos();
       }
+
+      // update activeCategory
+      activeCategoryDetail.sortType = clickedMenuItem;
 
       // Save in Local Storage
       updateLocalStorage();
@@ -727,6 +881,9 @@ categoryMenuIcon.addEventListener("click", function (event) {
   todoMenu.classList.remove("dropdown-show");
   sortMenu.classList.remove("dropdown-show");
 
+  if (themeColorBox.style.display === "flex") {
+    themeColorBox.style.display = "none";
+  }
   if (categoryMenu.classList.contains("dropdown-show")) {
     document.addEventListener("click", function () {
       categoryMenu.classList.remove("dropdown-show");
@@ -765,6 +922,15 @@ sortBtn.addEventListener("click", function (event) {
 sidebarIcon.addEventListener("click", function () {
   sidebar.classList.toggle("sidebar-hide");
   mainContent.classList.toggle("main-expand");
+});
+
+// Close - Sorting Type
+sortingRemoveIcon.addEventListener("click", function () {
+  sortingTypeBox.style.display = "none";
+  activeCategoryDetail.sortType = "none";
+  displayTodos();
+  // Save to Local Storage
+  updateLocalStorage();
 });
 
 // Update Layout ✔️

@@ -93,7 +93,7 @@ body {
 
 .category-box::-webkit-scrollbar-thumb {
 	background-color: var(--darkgray2);
-	border-radius: 4px;
+	border-radius: 8px;
 }
 
 .category-box .category {
@@ -112,6 +112,7 @@ body {
 	justify-content: space-between;
 	width: 100%;
 	overflow: hidden;
+	gap: 5px;
 }
 
 .category .category-name {
@@ -214,13 +215,13 @@ main header {
 }
 
 header .title-box {
-	width: 80%;
+	width: calc(100% - 100px);
 	display: flex;
 	align-items: center;
 }
 
 main header .title {
-	font-size: 24px;
+	font-size: 1.7rem;
 	padding: 4px;
 	padding-right: 10px;
 	white-space: nowrap;
@@ -313,10 +314,10 @@ header .title-box .title-menu:hover {
 
 
 .title-box .change-theme .theme-colors {
+	display: none;
 	position: absolute;
 	top: 0;
 	left: 200px;
-	display: none;
 	align-items: center;
 	justify-content: space-around;
 	gap: 15px;
@@ -347,9 +348,10 @@ header .title-box .title-menu:hover {
 	font-size: 1.1rem;
 	padding: 7px 15px;
 	border-radius: 6px;
+	width: 100px;
 	background-color: transparent;
 	color: var(--green);
-	border: none;
+	border: 1px solid #333;
 	cursor: pointer;
 	transition: all 0.5s ease;
 	display: flex;
@@ -365,8 +367,33 @@ main header .filter-box .sort-btn:hover {
 .sort-menu {
 	display: none;
 	left: auto;
-	top: 30px;
-	right: 115px;
+	top: 70px;
+	right: 35px;
+}
+
+/* Sorting type  */
+.sort-type-box {
+	display: none;
+	position: absolute;
+	top: 58px;
+	right: 50px;
+	padding: 5px 10px;
+	width: fit-content;
+	align-items: center;
+	gap: 12px;
+	font-size: 0.8rem;
+	font-weight: 600;
+}
+
+.sort-type-close {
+	font-size: 1.3rem !important;
+	border-radius: 4px;
+	padding: 2px;
+	transition: all 0.3s ease-in-out;
+}
+
+.sort-type-close:hover {
+	background-color: #333;
 }
 
 /* Add todo box  */
@@ -431,7 +458,7 @@ main header .filter-box .sort-btn:hover {
 
 .todo-container::-webkit-scrollbar-thumb {
 	background-color: var(--darkgray2);
-	border-radius: 4px;
+	border-radius: 8px;
 }
 
 /* Todo Styles */
@@ -585,6 +612,12 @@ main header .filter-box .sort-btn:hover {
 		background-color: transparent;
 	}
 
+	.category-box .active {
+		font-weight: 600;
+		background-color: #353535 !important;
+		border-left: 6px solid var(--green);
+	}
+
 	.category-box hr {
 		margin: 10px 0px;
 	}
@@ -614,9 +647,6 @@ main header .filter-box .sort-btn:hover {
 		padding-left: 70px;
 	}
 
-	header .title-box {
-		width: min(400px, 80%);
-	}
 
 	main header .title {
 		font-size: 1.7rem;
@@ -653,7 +683,12 @@ main header .filter-box .sort-btn:hover {
 	}
 
 	.change-theme:hover .theme-colors {
-		display: flex;
+		display: flex !important;
+	}
+
+	.title-box .change-theme .theme-colors {
+		top: -86px;
+		left: 0;
 	}
 
 	.filter-box .sort-btn {
@@ -699,7 +734,7 @@ main header .filter-box .sort-btn:hover {
 	}
 
 	.todo-container::-webkit-scrollbar {
-		width: 5px;
+		width: 6px;
 	}
 
 	/* Todo Styles */
@@ -708,16 +743,16 @@ main header .filter-box .sort-btn:hover {
 	}
 
 	.todo:hover {
-		background-color: transparent;
+		background-color: #2a2a2a;
 	}
 
 	.todo span:not(.todo-value) {
 		font-size: 1.55rem;
 	}
 
-		.todo .todo-value{
-			padding: 10px 0;
-		}
+	.todo .todo-value {
+		padding: 10px 0;
+	}
 
 	/* Todo menu  */
 	.todo-menu {
@@ -750,5 +785,5 @@ main header .filter-box .sort-btn:hover {
 }
 
 .theme-green * {
-	color: #a3cd88;
+	color: #4aa079;
 }
