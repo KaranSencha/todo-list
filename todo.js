@@ -788,20 +788,26 @@ function clickedCategoryMenuItem() {
         const activeIndex = allCategoryDetail.findIndex((item) => {
           return item.isActive;
         });
+        console.log(activeIndex);
 
-        // Remove the Active Category - categories
-        allCategoryDetail = allCategoryDetail.filter((category) => {
-          return !category.isActive;
-        });
+        // Not delete Important Category
+        if (activeIndex < 4) {
+          return alert("Fixed Category - Not deletable");
+        } else {
+          // Remove the Active Category - categories
+          allCategoryDetail = allCategoryDetail.filter((category) => {
+            return !category.isActive;
+          });
 
-        // Make Active Category before 1 index
-        allCategoryDetail[activeIndex - 1].isActive = true;
+          // Make Active Category before 1 index
+          allCategoryDetail[activeIndex - 1].isActive = true;
 
-        // Save in Local Storage
-        updateLocalStorage();
+          // Save in Local Storage
+          updateLocalStorage();
 
-        // Now Display new Category Data
-        displayCategories();
+          // Now Display new Category Data
+          displayCategories();
+        }
       }
     });
   });
@@ -941,3 +947,10 @@ function updateLayout() {
     mainContent.classList.add("main-expand");
   }
 }
+
+// TODO : Move to - Todo Menu
+// TODO : Change Icon - Category Menu
+
+// FIX : Active Category
+// FIX : Sorting Functionality
+// FIX : Fixed Category - Not deletable

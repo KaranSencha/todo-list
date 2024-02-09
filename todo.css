@@ -98,8 +98,8 @@ body {
 
 .category-box .category {
 	width: 100%;
-	padding: 10px 25px;
-	font-size: 18px;
+	padding: 12px 25px;
+	font-size: 19px;
 	cursor: pointer;
 	border-left: 4px solid transparent;
 	display: flex;
